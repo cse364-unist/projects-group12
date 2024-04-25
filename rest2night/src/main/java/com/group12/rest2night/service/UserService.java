@@ -1,6 +1,5 @@
 package com.group12.rest2night.service;
 
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +20,8 @@ public class UserService {
     @Autowired
     private MovieService movieService;
 
-    public void addMovieToWishlist(ObjectId userId, int movieId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+    public void addMovieToWishlist(String username, int movieId) {
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));
         List<Integer> wishList = user.getWishList();
         if (wishList == null) {
             wishList = new ArrayList<>();
@@ -32,8 +31,8 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public List<Movie> getWishlistByUserId(ObjectId userId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+    public List<Movie> getWishlist(String username) {
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));
         List<Movie> movies = new ArrayList<>();
         user.getWishList().stream()
                         .forEach(movieId -> {

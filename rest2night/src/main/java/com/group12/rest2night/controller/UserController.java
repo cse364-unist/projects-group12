@@ -26,16 +26,16 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/{userId}/wishList/add")
-    public ResponseEntity<String> addToWishlist(@PathVariable ObjectId userId, @RequestParam int movieId) {
-        userService.addMovieToWishlist(userId, movieId);
+    @PostMapping("/{username}/wishList/add")
+    public ResponseEntity<String> addToWishlist(@PathVariable String username, @RequestParam int movieId) {
+        userService.addMovieToWishlist(username, movieId);
         return ResponseEntity.ok("Movie added to wishlist successfully");
     }
 
 
-    @GetMapping("/{userId}/wishList")
-    public ResponseEntity<?> getWishlistByUserId(@PathVariable ObjectId userId) {
-        List<Movie> wishlist = userService.getWishlistByUserId(userId);
+    @GetMapping("/{username}/wishList")
+    public ResponseEntity<?> getWishlistByUserId(@PathVariable String username) {
+        List<Movie> wishlist = userService.getWishlist(username);
         return ResponseEntity.ok(wishlist);
     }
 

@@ -29,8 +29,9 @@ public class MovieController {
 
     
     @PostMapping("/{id}/addComment")
-    public ResponseEntity<Movie> addComment(@PathVariable int id, @RequestBody Comment comment){
-        return new ResponseEntity<Movie>(movieService.addComment(comment, id), HttpStatus.CREATED);
+    public ResponseEntity<String> addComment(@PathVariable int id, @RequestBody Comment comment){
+        movieService.addComment(comment, id);
+        return ResponseEntity.ok("Comment was successfully added to Movie");
     }
 
 }
