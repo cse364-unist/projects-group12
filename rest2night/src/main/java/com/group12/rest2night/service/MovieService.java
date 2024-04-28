@@ -14,6 +14,7 @@ import com.group12.rest2night.repository.MovieRepository;
 
 @Service
 public class MovieService {
+    
     @Autowired
     private MovieRepository movieRepository;
 

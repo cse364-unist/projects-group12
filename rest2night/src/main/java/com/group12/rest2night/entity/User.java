@@ -16,7 +16,12 @@ import java.util.List;
 public class User {
     @Id
     private ObjectId id;
+    private int userId;
     private String username;
     private String password;
     private List<Integer> wishList;
+    private long points;
+    private List<Integer> unlockedMovies;
+    private int age;
+    private String occupation;
 }

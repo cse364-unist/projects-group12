@@ -6,12 +6,14 @@ import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+// @Builder
 @Document(collection = "movies")
 public class Movie {
     private ObjectId id;
@@ -23,4 +25,5 @@ public class Movie {
     private String trailerLine;
     private double rate;
     private List<Comment> comments;
+    private int price;
 }
