@@ -29,12 +29,9 @@ public class QuizServiceTest {
     void testRandomQuiz() {
 
         List<Quiz> quizzes = new ArrayList<>();
-        quizzes.add(new Quiz()); // Add at least one quiz
+        quizzes.add(new Quiz());
 
         when(quizRepository.findAll()).thenReturn(quizzes);
-
-        Random random = mock(Random.class);
-        when(random.nextInt(quizzes.size())).thenReturn(0); // Always return 0 for predictable testing
 
         Quiz randomQuiz = quizService.randomQuiz();
 

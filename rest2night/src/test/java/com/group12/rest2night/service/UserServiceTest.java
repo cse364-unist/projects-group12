@@ -1,5 +1,6 @@
 package com.group12.rest2night.service;
 
+import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -51,7 +52,7 @@ public class UserServiceTest {
     }
 
     @Test
-    void testAddMovieToWishlistWithWL() {
+    void testAddMovieToWishlistWithExistedWL() {
 
         User user = new User();
         user.setUsername("testUser");
@@ -64,6 +65,14 @@ public class UserServiceTest {
         assertTrue(user.getWishList().contains(1));
         verify(userRepository, times(1)).save(user);
     }
+
+    @Test
+    void testAddMovieToWishlistExceptionHandler() {
+
+        assertThrows(RuntimeException.class, () -> {userService.addMovieToWishlist(null, 1);});
+
+    }
+
 
     @Test
     void testGetWishlist() {
@@ -89,6 +98,13 @@ public class UserServiceTest {
 
         assertEquals(2, wishlist.size());
         assertTrue(wishlist.stream().allMatch(movie -> movie.getTitle().startsWith("Movie")));
+    }
+
+    @Test
+    void testGetWishlistExceptionHandler() {
+
+        assertThrows(RuntimeException.class, () -> {userService.getWishlist(null);});
+        
     }
 
     @Test

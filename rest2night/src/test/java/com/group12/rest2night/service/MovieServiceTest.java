@@ -26,7 +26,7 @@ public class MovieServiceTest {
     @Mock
     private MovieRepository movieRepository;
 
-    @InjectMocks
+    @InjectMocks 
     private MovieService movieService;
 
     @Test
@@ -71,6 +71,29 @@ public class MovieServiceTest {
         movieService.addComment(comment, 1);
 
         assertEquals(1, movie.getComments().size());
+        verify(movieRepository, times(1)).save(movie);
+    }
+
+    @Test
+    void testAddCommentToMovieWithComments() {
+
+        Comment comment = new Comment();
+        comment.setBody("Test comment");
+
+        Comment comment2 = new Comment();
+        comment2.setBody("Test2 comment");
+
+        Movie movie = new Movie();
+        movie.setMovieId(1);
+        List<Comment> comments = new ArrayList<>();
+        comments.add(comment2);
+        movie.setComments(comments);
+
+        when(movieRepository.findByMovieId(1)).thenReturn(Optional.of(movie));
+
+        movieService.addComment(comment, 1);
+
+        assertEquals(2, movie.getComments().size());
         verify(movieRepository, times(1)).save(movie);
     }
 }
