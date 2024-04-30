@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 public class Quiz {
     @Id
     private ObjectId id;
-    private String qustion;
+    private String question;
     private List<String> answers;
     private String answer;
 }

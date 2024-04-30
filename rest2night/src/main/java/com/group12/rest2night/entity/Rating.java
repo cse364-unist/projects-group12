@@ -16,7 +16,7 @@ public class Rating {
     @Id
     private ObjectId id;
     private int movieId;
-    private int employeeId;
+    private int userId;
     private int rating;
     private int timestamp;
 }
