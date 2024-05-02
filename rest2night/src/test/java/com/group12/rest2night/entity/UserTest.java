@@ -52,8 +52,8 @@ public class UserTest {
     void testEqualsAndHashCode() {
         ObjectId someId = new ObjectId();
 
-        User user1 = new User(someId, 123, "testUser", "password", new ArrayList<>(), 100L, new ArrayList<>(), 25, "Engineer");
-        User user2 = new User(someId, 123, "testUser", "password", new ArrayList<>(), 100L, new ArrayList<>(), 25, "Engineer");
+        User user1 = new User(someId, 123, "testUser", "password", new ArrayList<>(), 100L, new ArrayList<>(), 25, "Engineer", "F");
+        User user2 = new User(someId, 123, "testUser", "password", new ArrayList<>(), 100L, new ArrayList<>(), 25, "Engineer", "F");
 
         assertEquals(user1, user2);
         assertEquals(user1.hashCode(), user2.hashCode());

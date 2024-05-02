@@ -4,12 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.group12.rest2night.entity.Movie;
+import com.group12.rest2night.entity.Rating;
 import com.group12.rest2night.entity.User;
+import com.group12.rest2night.repository.RatingRepository;
 import com.group12.rest2night.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -19,6 +23,9 @@ public class UserService {
 
     @Autowired
     private MovieService movieService;
+
+    @Autowired
+    private RatingRepository ratingRepository;
 
     public void addMovieToWishlist(String username, int movieId) {
         User user = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));
@@ -60,6 +67,22 @@ public class UserService {
         return userRepository.findByUsername(username).isPresent();
     }
 
+    public ArrayList<Integer> getUsersWith(String occup, int age, String gender){
+        ArrayList<Integer> list = new ArrayList<>();
+        userRepository.findAll().stream()
+                                    .forEach(user -> {
+                                        if((age == -1 || user.getAge() == age) && (gender == "" || user.getGender().toLowerCase().equals(gender)) && (occup == "" || user.getOccupation().toLowerCase().equals(occup))){
+                                            list.add(user.getUserId());
+                                        };
+                                    }
+                                    );
+        // System.out.println(users);
+        return list;            
+    }
+
+    public List<Rating> getRatingsOfUser(int userId){
+        return ratingRepository.findByUserId(userId);
+    }
     // public boolean buyMovie(String username, int movieId){
     //     User user = userRepository.findByUsername(username).orElseThrow();
     //     Movie movie = movieService.findMovie(movieId).orElseThrow();

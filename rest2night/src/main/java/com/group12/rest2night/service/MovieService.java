@@ -2,8 +2,10 @@ package com.group12.rest2night.service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,5 +40,14 @@ public class MovieService {
         movie.setComments(comments);
         movieRepository.save(movie);
         return;
+    }
+
+    public HashSet<Integer> getMoviesWith(List<String> genres){
+        HashSet<Integer> list = new HashSet<>();
+        movieRepository.findAll().stream()
+                                .filter(movie -> movie.getGenres().stream().anyMatch(genre -> genres.contains(genre.toLowerCase())))
+                                .map(Movie::getMovieId)
+                                .forEach(list::add);
+        return list;
     }
 }

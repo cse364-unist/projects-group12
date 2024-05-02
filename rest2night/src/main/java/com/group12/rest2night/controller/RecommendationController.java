@@ -1,41 +1,34 @@
 package com.group12.rest2night.controller;
 
 import java.util.*;
-import com.group12.rest2night.service.Recommendation;
+
+
+import com.group12.rest2night.entity.Movie;
+import com.group12.rest2night.service.RecommendationService;
 import org.json.JSONObject;
-import java.io.IOException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class RecommendationController {
-    @GetMapping("/users/recommendations")
-    public String getMovies(@RequestBody String input) {
-        JSONObject js = null;
+
+    @Autowired
+    private RecommendationService recommendationService;
+
+    @GetMapping("/recommendation/type1")
+    public ResponseEntity<List<Movie>> getMovies(@RequestBody String input) {
         try{
-            js = new JSONObject(input.toLowerCase());
+            JSONObject js = new JSONObject(input.toLowerCase());
             HashMap<String,String> args = new HashMap<>();
             for(String key: js.keySet())
                 args.put(key,js.getString(key));
-            return Recommendation.getMovies(args);
+            return ResponseEntity.ok(recommendationService.getMovies(args));
         }catch (Exception e){
-            return "Please pass json in right format\n";
+            return ResponseEntity.badRequest().build();
         }
     }
-    @GetMapping("/movies/recommendations")
-    public String getRecommendations(@RequestBody String input) throws IOException {
-        JSONObject js = null;
-        try {
-            HashMap<String,String> args = new HashMap<>();
-            js = new JSONObject(input.toLowerCase());
-            for (String key : js.keySet()) {
-                if (key.equals("limit")) args.put(key, Integer.toString(js.getInt(key)));
-                else args.put(key, js.getString(key));
-            }
-            return Recommendation.recommendMovies(args);
-        }catch (Exception e){
-            return "Please pass json in right format\n";
-        }
-    }
+
 }
