@@ -8,9 +8,6 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-
 import java.util.List;
 
 @Data
