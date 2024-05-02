@@ -23,7 +23,7 @@ public class RecommendationController {
     
     @Autowired
     private MovieService movieService;
-    
+
     @GetMapping("/recommendation/type1")
     public ResponseEntity<List<Movie>> getMovies(@RequestBody String input) {
         try{
@@ -61,8 +61,24 @@ public class RecommendationController {
                 List<Movie> filteredMovies = filterMoviesByGenres(movies, familyGenresSet);
                 return ResponseEntity.ok(filteredMovies);
             }
+            if (args.containsKey("occasion") && args.get("occasion").equalsIgnoreCase("date night")) {
+                String[] dateGenres = {"Romance", "Adventure", "Comedy", "Fantasy", 
+                                        "Action", "Thriller", "Drama", "Mystery"};
+                List<String> genreList = new ArrayList<>();
+                Collections.addAll(genreList, dateGenres);
+                Collections.shuffle(genreList);
+                String[] randomGenres = new String[3];
+                for (int i = 0; i < 3; i++) {
+                    randomGenres[i] = genreList.get(i);
+                }
+                Set<String> dateGenresSet = new HashSet<>(Arrays.asList(randomGenres));
+                List<Movie> movies = movieService.allMovies();
+                List<Movie> filteredMovies = filterMoviesByGenres(movies, dateGenresSet);
+                return ResponseEntity.ok(filteredMovies);
+            }
             // Add a default return statement
             return ResponseEntity.ok("No movies found.");
+            
         } catch (Exception e){
             return ResponseEntity.ok("Please pass JSON in the right format.\n");
         }
