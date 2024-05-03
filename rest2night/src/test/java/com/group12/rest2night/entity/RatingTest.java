@@ -33,4 +33,26 @@ public class RatingTest {
 
         assertNotNull(rating.toString());
     }
+
+    @Test
+    void testSettersAndGetters(){
+        Rating rating = new Rating();
+        ObjectId someId = new ObjectId();
+        int movieid = 2;
+        int userid = 123; 
+        int rating1 = 4; 
+        int time = 1000;
+
+        rating.setTimestamp(time);
+        rating.setId(someId);
+        rating.setMovieId(movieid);
+        rating.setRating(rating1);
+        rating.setUserId(userid);
+
+        assertEquals(rating.getId(), someId);
+        assertEquals(rating.getMovieId(), movieid);
+        assertEquals(rating.getRating(), rating1);
+        assertEquals(rating.getUserId(), userid);
+        assertEquals(rating.getTimestamp(), time);
+    }
 }

@@ -1,54 +1,68 @@
 package com.group12.rest2night.entity;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class LoginRequestTest {
-    @Test
-    void testSettersAndGetters() {
-        LoginRequest request = new LoginRequest();
 
+    @Test
+    public void testLoginRequestConstructorAndGetters() {
         String username = "testUser";
-        String password = "password";
+        String password = "testPassword";
 
-        request.setUsername(username);
-        request.setPassword(password);
+        LoginRequest loginRequest = new LoginRequest(username, password);
 
-        assertEquals(username, request.getUsername());
-        assertEquals(password, request.getPassword());
+        assertEquals(username, loginRequest.getUsername());
+        assertEquals(password, loginRequest.getPassword());
     }
 
     @Test
-    void testEqualsAndHashCode() {
-        LoginRequest request1 = new LoginRequest();
-        request1.setUsername("testUser");
-        request1.setPassword("password");
+    public void testLoginRequestSetters() {
+        LoginRequest loginRequest = new LoginRequest();
+        String username = "testUser";
+        String password = "testPassword";
 
-        LoginRequest request2 = new LoginRequest();
-        request2.setUsername("testUser");
-        request2.setPassword("password");
+        loginRequest.setUsername(username);
+        loginRequest.setPassword(password);
 
-        assertEquals(request1, request2);
-        assertEquals(request1.hashCode(), request2.hashCode());
-
-        request2.setPassword("anotherPassword");
-
-        assertNotEquals(request1, request2);
-        assertNotEquals(request1.hashCode(), request2.hashCode());
-
-        assertNotEquals(request1, null);
+        assertEquals(username, loginRequest.getUsername());
+        assertEquals(password, loginRequest.getPassword());
     }
 
     @Test
-    void testToString() {
-        LoginRequest request = new LoginRequest();
-        request.setUsername("testUser");
-        request.setPassword("password");
+    public void testEqualsAndHashCode() {
+        String username1 = "testUser1";
+        String username2 = "testUser2";
+        String password1 = "testPassword1";
+        String password2 = "testPassword2";
 
-        assertNotNull(request.toString());
+        LoginRequest loginRequest1 = new LoginRequest(username1, password1);
+        LoginRequest loginRequest2 = new LoginRequest(username1, password1);
+        LoginRequest loginRequest3 = new LoginRequest(username2, password1);
+        LoginRequest loginRequest4 = new LoginRequest(username1, password2);
+
+        assertEquals(loginRequest1, loginRequest2);
+        assertEquals(loginRequest1.hashCode(), loginRequest2.hashCode());
+        assertEquals(loginRequest1.toString(), loginRequest2.toString());
+
+        assertEquals(loginRequest1.hashCode(), loginRequest1.hashCode()); // Consistency check
+        assertEquals(loginRequest1, loginRequest1); // Reflexivity check
+
+        assertEquals(loginRequest1.equals(loginRequest3), false);
+        assertEquals(loginRequest1.equals(loginRequest4), false);
+    }
+
+    @Test
+    public void testNotEquals() {
+        String username1 = "testUser1";
+        String username2 = "testUser2";
+        String password1 = "testPassword1";
+        String password2 = "testPassword2";
+
+        LoginRequest loginRequest1 = new LoginRequest(username1, password1);
+        LoginRequest loginRequest2 = new LoginRequest(username2, password2);
+
+        assertEquals(loginRequest1.equals(loginRequest2), false);
     }
 }
-
