@@ -64,6 +64,41 @@ public class UserControllerTest {
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertEquals("Username already exists", response.getBody());
     }
+
+    @Test
+    public void testLogin_Success() {
+        LoginRequest loginRequest = new LoginRequest("validuser", "correctpassword");
+
+        when(userService.isValidUser("validuser", "correctpassword")).thenReturn(true);
+
+        ResponseEntity<String> result = userController.login(loginRequest);
+
+        assertEquals(HttpStatus.OK, result.getStatusCode());
+        assertEquals("Login successful", result.getBody());
+    }
+
+    @Test
+    public void testLogin_Failure() {
+        LoginRequest loginRequest = new LoginRequest("invaliduser", "wrongpassword");
+
+        when(userService.isValidUser("invaliduser", "wrongpassword")).thenReturn(false);
+
+        ResponseEntity<String> result = userController.login(loginRequest);
+
+        assertEquals(HttpStatus.UNAUTHORIZED, result.getStatusCode());
+        assertEquals("Invalid username or password", result.getBody());
+    }
+
+    @Test
+    public void testAddPoints_Success() {
+        String username = "testuser";
+        // You don't need to mock the result for 'addPoints' if it returns a simple success message
+
+        ResponseEntity<?> result = userController.addPoints(username);
+
+        assertEquals(HttpStatus.OK, result.getStatusCode());
+        assertEquals("Added Successfuly", result.getBody());
+    }
 //
 
 }
