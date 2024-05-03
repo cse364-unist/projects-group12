@@ -17,56 +17,46 @@ public class RecommendationService {
 
     @Autowired
     private MovieService movieService;
+
     @Autowired
     private UserService userService;
-
 
     public List<Movie> getMovies(HashMap<String, String> args) {
         int age;
         String[] genres = new String[5];
         if (args.get("gender") == null)
-            throw new RuntimeErrorException(null, "Gender key is not given\n");
+            throw new RuntimeException("Gender key is not given\n");
         else if (args.get("age") == null)
-            throw new RuntimeErrorException(null, "Age key is not given\n");
+            throw new RuntimeException("Age key is not given\n");
         else if (args.get("occupation") == null)
-            throw new RuntimeErrorException(null, "Occupation key is not given\n") ;
+            throw new RuntimeException("Occupation key is not given\n") ;
         else if (args.get("genre") == null)
-            throw new RuntimeErrorException(null, "Genre key is not given\n");
+            throw new RuntimeException("Genre key is not given\n");
 
-        //* Gender check
         String gender = args.get("gender").toLowerCase();
 
-        //* Age check
         if (args.get("age").length() > 0) {
             age = Integer.parseInt(args.get("age"));
         } else age = -1;
 
-        //* Genres check
         if (args.get("genre").length() != 0) {
             genres = args.get("genre").toLowerCase().split("\\|");
         }
 
         String occupation = args.get("occupation").toLowerCase();
 
-        try {
-
-            ArrayList<ArrayList<Integer>> userLists = getAllUsers(occupation, age, gender);
-            HashSet<Integer> movies = movieService.getMoviesWith(Arrays.asList(genres));
-
-            if (movies.size() <= 0) {
-                throw new RuntimeErrorException(null, "No movie found that satisfies requested genres");
-            }
-
-            return getTopN(userLists, movies, 10);
+        ArrayList<ArrayList<Integer>> userLists = getAllUsers(occupation, age, gender);
+        HashSet<Integer> movies = movieService.getMoviesWith(Arrays.asList(genres));
+        System.out.println(movies);
+        if (movies.size() <= 0) {
+            throw new RuntimeException("No movie found that satisfies requested genres");
         }
 
-        catch (IOException e) {
-            new IOException(e);
-        }
-        return null;
+        return getTopN(userLists, movies, 10);
+        
     }
 
-    public ArrayList<ArrayList<Integer>> getAllUsers(String occupation, Integer age, String gender) throws IOException {
+    public ArrayList<ArrayList<Integer>> getAllUsers(String occupation, Integer age, String gender) {
         ArrayList<ArrayList<Integer>> lists = new ArrayList<>();
         lists.add(userService.getUsersWith(occupation, age, gender));
         lists.add(userService.getUsersWith("", age, gender));
@@ -79,7 +69,7 @@ public class RecommendationService {
         return lists;
     }
 
-    public List<Movie> getTopN(ArrayList<ArrayList<Integer>> userLists, HashSet<Integer> movies, int n) throws IOException {
+    public List<Movie> getTopN(ArrayList<ArrayList<Integer>> userLists, HashSet<Integer> movies, int n)  {
         int count = 0;
         int index = 0;
         ArrayList<Integer> printedList = new ArrayList<>();
@@ -135,7 +125,7 @@ public class RecommendationService {
         return (R * v + C * m) / (v + m);
     }
 
-    public HashMap<Integer, int[]> getRatings(ArrayList<Integer> userIDs, HashSet<Integer> movieIDs) throws IOException {
+    public HashMap<Integer, int[]> getRatings(ArrayList<Integer> userIDs, HashSet<Integer> movieIDs) {
         HashMap<Integer, int[]> ratingList = new HashMap<>();
 
         for (int userId : userIDs) {

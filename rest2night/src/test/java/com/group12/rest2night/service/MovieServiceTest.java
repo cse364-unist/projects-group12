@@ -7,9 +7,11 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
+import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -95,5 +97,23 @@ public class MovieServiceTest {
 
         assertEquals(2, movie.getComments().size());
         verify(movieRepository, times(1)).save(movie);
+    }
+
+    @Test
+    void testGetMoviesWith(){
+        Movie movie = new Movie(new ObjectId(), 5, "Test Movie", 2022, new ArrayList<>(), 4.5, new ArrayList<>());
+        List<Movie> listOfMovies = new ArrayList<>();
+        listOfMovies.add(movie);
+        List<String> genres = movie.getGenres();
+        genres.add("Action");
+
+        when(movieRepository.findAll()).thenReturn(listOfMovies);
+
+        List<String> listOfGenres = new ArrayList<>();
+        listOfGenres.add("action");
+
+        HashSet<Integer> list = movieService.getMoviesWith(listOfGenres);
+        // HashSet<Integer> list2 = movieService.getMoviesWith(listOfGenres);
+        assertEquals(1, list.size());
     }
 }

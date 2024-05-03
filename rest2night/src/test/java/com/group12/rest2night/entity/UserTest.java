@@ -26,7 +26,9 @@ public class UserTest {
         unlockedMovies.add(2);
         int age = 25;
         String occupation = "Engineer";
+        String gender = "F";
 
+        user.setGender(gender);
         user.setId(id);
         user.setUserId(userId);
         user.setUsername(username);
@@ -46,6 +48,7 @@ public class UserTest {
         assertEquals(unlockedMovies, user.getUnlockedMovies());
         assertEquals(age, user.getAge());
         assertEquals(occupation, user.getOccupation());
+        assertEquals(gender, user.getGender());
     }
 
     @Test
@@ -55,13 +58,18 @@ public class UserTest {
         User user1 = new User(someId, 123, "testUser", "password", new ArrayList<>(), 100L, new ArrayList<>(), 25, "Engineer", "F");
         User user2 = new User(someId, 123, "testUser", "password", new ArrayList<>(), 100L, new ArrayList<>(), 25, "Engineer", "F");
 
+        User user3 = new User(someId, 123, "testUser1", "password", new ArrayList<>(), 100L, new ArrayList<>(), 25, "Engineer", "F");
+        User user4 = new User(someId, 123, "testUser1", "password2", new ArrayList<>(), 100L, new ArrayList<>(), 25, "Engineer", "F");
+
         assertEquals(user1, user2);
         assertEquals(user1.hashCode(), user2.hashCode());
 
         user2.setUsername("anotherUser");
-
+        assertNotEquals(user3, user4);
+        assertNotEquals(user1.hashCode(), user4.hashCode());
         assertNotEquals(user1, user2);
         assertNotEquals(user1.hashCode(), user2.hashCode());
+
 
         assertNotEquals(user1, null);
     }
@@ -72,4 +80,6 @@ public class UserTest {
 
         assertNotNull(user.toString());
     }
+
+   
 }

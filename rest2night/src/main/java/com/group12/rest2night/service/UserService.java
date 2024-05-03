@@ -12,8 +12,6 @@ import com.group12.rest2night.repository.UserRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -76,14 +74,14 @@ public class UserService {
                                         };
                                     }
                                     );
-        // System.out.println(users);
         return list;            
     }
 
     public List<Rating> getRatingsOfUser(int userId){
         return ratingRepository.findByUserId(userId);
     }
-    // public boolean buyMovie(String username, int movieId){
+
+    // public boolean canBuyMovie(String username, int movieId){
     //     User user = userRepository.findByUsername(username).orElseThrow();
     //     Movie movie = movieService.findMovie(movieId).orElseThrow();
     //     if(user.getPoints() < movie.getPrice()){
