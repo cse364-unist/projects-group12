@@ -1,6 +1,7 @@
 package com.group12.rest2night.service;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -153,6 +154,13 @@ public class RecommendationServiceTest {
 
         assertNotNull(movies);
         assertEquals(1, movies.size());
+    }
+
+    @Test
+    public void testGetMoviesOnOccasion(){
+        assertThrows(RuntimeException.class, () -> recommendationService.getMoviesOnOccasion("familyNight"));
+        assertThrows(RuntimeException.class, () -> recommendationService.getMoviesOnOccasion("dateNight"));
+        assertThrows(RuntimeException.class, () -> recommendationService.getMoviesOnOccasion("noOccasion"));
     }
     
 }

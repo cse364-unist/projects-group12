@@ -5,12 +5,8 @@ import com.group12.rest2night.entity.Rating;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
-
-import javax.management.RuntimeErrorException;
 
 @Service
 public class RecommendationService {
@@ -47,7 +43,7 @@ public class RecommendationService {
 
         ArrayList<ArrayList<Integer>> userLists = getAllUsers(occupation, age, gender);
         HashSet<Integer> movies = movieService.getMoviesWith(Arrays.asList(genres));
-        System.out.println(movies);
+
         if (movies.size() <= 0) {
             throw new RuntimeException("No movie found that satisfies requested genres");
         }
@@ -140,5 +136,32 @@ public class RecommendationService {
             }
         }
         return ratingList;
+    }
+
+    public List<Movie> getMoviesOnOccasion(String occasion){
+
+        List<String> genres = new ArrayList<>();
+
+        if(occasion.equals("familyNight")){
+            String[] family_genres = {"Animation", "Adventure", "Comedy", "Fantasy", "Sci-Fi", 
+                                        "Action", "Musical", "Drama", "Children's"};
+            genres = Arrays.asList(family_genres);
+        } else if(occasion.equals("dateNight")){
+            String[] dateGenres = {"Romance", "Adventure", "Comedy", "Fantasy", 
+                                "Action", "Thriller", "Drama", "Mystery"};
+            genres = Arrays.asList(dateGenres);
+        } else throw new RuntimeException("No such occasion");
+
+        Collections.shuffle(genres);
+
+        HashMap<String,String> args = new HashMap<>();
+        args.put("gender", "");
+        args.put("age", "");
+        args.put("occupation", "");
+        String stringOfGenres = genres.get(0) + "|" + genres.get(3) + "|" + genres.get(6);
+        args.put("genre", stringOfGenres);
+
+        return getMovies(args);
+        
     }
 }
