@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -14,6 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -21,7 +23,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.group12.rest2night.entity.Movie;
+import com.group12.rest2night.entity.Rating;
 import com.group12.rest2night.entity.User;
+import com.group12.rest2night.repository.RatingRepository;
 import com.group12.rest2night.repository.UserRepository;
 
 
@@ -36,6 +40,9 @@ public class UserServiceTest {
 
     @InjectMocks
     private UserService userService;
+
+    @Mock
+    private RatingRepository ratingRepository;
 
     @Test
     void testAddMovieToWishlist() {
@@ -145,5 +152,39 @@ public class UserServiceTest {
         assertTrue(userService.isUserExists("testUser"));
 
         assertFalse(userService.isUserExists("nonExistingUser"));
+    }
+
+    @Test
+    void testGetUsersWith(){
+        List<User> listOfUsers = new ArrayList<>();
+        User user = new User(new ObjectId(), 123, "testUser", "password", new ArrayList<>(), 100L, new ArrayList<>(), 25, "Engineer", "F");
+        listOfUsers.add(user);
+
+        when(userRepository.findAll()).thenReturn(listOfUsers);
+
+        ArrayList<Integer> list =  userService.getUsersWith("engineer", 25, "f");
+        ArrayList<Integer> list2 =  userService.getUsersWith("programmer", 25, "f");
+        ArrayList<Integer> list3 =  userService.getUsersWith("engineer", 25, "m");
+        ArrayList<Integer> list4 =  userService.getUsersWith("engineer", 56, "f");
+        ArrayList<Integer> list5 =  userService.getUsersWith("", -1, "");
+
+        assertEquals(1, list.size());
+        assertEquals(0, list3.size());
+        assertEquals(0, list2.size());
+        assertEquals(0, list4.size());
+        assertEquals(1, list5.size());
+    }
+
+    @Test
+    void testGetRatingsOfUser(){
+        Rating rating = new Rating(new ObjectId(), 5, 5, 5, 1618548376);
+        List<Rating> listOfRatings = new ArrayList<>();
+        listOfRatings.add(rating);
+
+        when(ratingRepository.findByUserId(0)).thenReturn(listOfRatings);
+
+        List<Rating> list = userService.getRatingsOfUser(0);
+
+        assertEquals(1, list.size());
     }
 }
