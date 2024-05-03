@@ -4,6 +4,7 @@ import com.group12.rest2night.entity.LoginRequest;
 import com.group12.rest2night.entity.Movie;
 import com.group12.rest2night.entity.User;
 import com.group12.rest2night.service.UserService;
+import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -19,6 +20,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+
 @ExtendWith(MockitoExtension.class)
 public class UserControllerTest {
 
@@ -27,6 +32,8 @@ public class UserControllerTest {
 
     @InjectMocks
     private UserController userController;
+
+
 
     @Test
     void testAddToWishlist() {
@@ -39,12 +46,27 @@ public class UserControllerTest {
         assertEquals("Movie added to wishlist successfully", response.getBody());
     }
 
+    @Test
+    public void testGetWishlistByUserId_Success() {
+        String username = "testuser";
+        List<Movie> wishlist = createSampleMovieList();
+
+        when(userService.getWishlist(username)).thenReturn(wishlist);
+
+        ResponseEntity<?> result = userController.getWishlistByUserId(username);
+
+        assertEquals(HttpStatus.OK, result.getStatusCode());
+//        assertNotNull(result.getBody());
+        assertEquals(wishlist, result.getBody());
+    }
+
+
 
     @Test
     void testAddUser() {
         User user = new User();
         user.setUsername("testuser");
-        user.setPassword("password"); // (Note: Avoid plain text passwords in real applications)
+        user.setPassword("password"); 
         when(userService.isUserExists(user.getUsername())).thenReturn(false); // User doesn't exist yet
 
         ResponseEntity<String> response = userController.addUser(user);
@@ -92,12 +114,25 @@ public class UserControllerTest {
     @Test
     public void testAddPoints_Success() {
         String username = "testuser";
-        // You don't need to mock the result for 'addPoints' if it returns a simple success message
 
         ResponseEntity<?> result = userController.addPoints(username);
 
         assertEquals(HttpStatus.OK, result.getStatusCode());
         assertEquals("Added Successfuly", result.getBody());
+    }
+
+    private List<Movie> createSampleMovieList() {
+        List<Movie> movies = new ArrayList<>();
+
+        Movie movie1 = new Movie();
+        movie1.setId(new ObjectId());
+        movie1.setMovieId(123); // Example movieId
+        movie1.setTitle("Action Movie 1");
+        movie1.setYear(2023); // Example year
+        movie1.setGenres(List.of("Action", "Thriller"));
+        movies.add(movie1);
+
+        return movies;
     }
 //
 
