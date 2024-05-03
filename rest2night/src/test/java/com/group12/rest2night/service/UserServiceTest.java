@@ -187,4 +187,15 @@ public class UserServiceTest {
 
         assertEquals(1, list.size());
     }
+
+    @Test
+    void testAddPointsToUser(){
+        User user = new User(new ObjectId(), 123, "testUser", "password", new ArrayList<>(), 100L, new ArrayList<>(), 25, "Engineer", "F");
+        when(userRepository.findByUsername("testUser")).thenReturn(Optional.of(user));
+        
+        userService.addPointsToUser("testUser");
+
+        assertEquals(110, user.getPoints());
+        assertThrows(RuntimeException.class, () -> userService.addPointsToUser("noUser"));
+    }
 }

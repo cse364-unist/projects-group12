@@ -81,20 +81,9 @@ public class UserService {
         return ratingRepository.findByUserId(userId);
     }
 
-    // public boolean canBuyMovie(String username, int movieId){
-    //     User user = userRepository.findByUsername(username).orElseThrow();
-    //     Movie movie = movieService.findMovie(movieId).orElseThrow();
-    //     if(user.getPoints() < movie.getPrice()){
-    //         return false;
-    //     }
-    //     List<Integer> unlockedMovies = user.getUnlockedMovies();
-    //     if(unlockedMovies == null){
-    //         unlockedMovies = new ArrayList<>();
-    //     }
-    //     user.setPoints(user.getPoints() - movie.getPrice());
-    //     unlockedMovies.add(movieId);
-    //     user.setUnlockedMovies(unlockedMovies);
-    //     userRepository.save(user);
-    //     return true;
-    // }
+    public void addPointsToUser(String username){
+        User user = userRepository.findByUsername(username).orElseThrow();
+        long points = user.getPoints();
+        user.setPoints(points+10);
+    }
 }
