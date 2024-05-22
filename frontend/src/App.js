@@ -4,6 +4,7 @@ import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
 import MainPage from './components/MainPage';
 import './index';
+import Header from './components/Header';
 
 
 const App = () => {
@@ -35,6 +36,7 @@ const App = () => {
 
   return (
     <Router>
+      <Header isLoggedIn={isLoggedIn} onLogout={handleLogout} />
       <Routes>
         <Route path="/main" element={isLoggedIn ? <MainPage onLogout={handleLogout}/> : <Navigate to="/" />} />
         <Route path="/" element={ isLoggedIn ? <Navigate to="/main" /> :

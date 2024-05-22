@@ -34,4 +34,9 @@ public class MovieController {
         return ResponseEntity.ok("Comment was successfully added to Movie");
     }
 
+    @GetMapping("/")
+    public ResponseEntity<?> allMovies(){
+        return ResponseEntity.ok(movieService.allMovies());
+    }
+
 }

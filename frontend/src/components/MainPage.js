@@ -1,16 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from "../api/axiosConfig"
+import MovieCard from './MovieCard';
+import './MoviePage.css'; 
 
-const MainPage = ({ onLogout }) => {
+const MainPage = () => {
+  const [movies, setMovies] = useState([]);
+
+  useEffect(() => {
+    axios.get('/movies/')
+      .then(response => {
+        setMovies(response.data);
+      })
+      .catch(error => {
+        console.error('There was an error fetching the movies!', error);
+      });
+  }, []);
+
   return (
     <div className="main-container">
       <h1>Welcome to the Movie App</h1>
-      <ul className="movie-list">
-        <li>Movie 1</li>
-        <li>Movie 2</li>
-        <li>Movie 3</li>
-        <li>Movie 4</li>
-      </ul>
-      <button className="logout-button" onClick={onLogout}>Logout</button>
+      <div className="movies-grid">
+        {movies.map(movie => (
+          <MovieCard key={movie.movieId} movie={movie} />
+        ))}
+      </div>
     </div>
   );
 };
