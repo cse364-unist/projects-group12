@@ -1,4 +1,4 @@
-/* src/index.css */
+/* src/styles.css */
 body {
   font-family: Arial, sans-serif;
   background-color: #f4f4f4;
@@ -7,7 +7,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 h1 {
@@ -19,6 +19,7 @@ form {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
 }
 
 form h2 {
@@ -65,4 +66,28 @@ button:hover {
 
 .toggle-button:hover {
   background-color: #0056b3;
+}
+
+.main-container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  width: 100%;
+  margin: 20px 0;
+}
+
+.movie-list {
+  list-style: none;
+  padding: 0;
+}
+
+.movie-list li {
+  padding: 10px 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.movie-list li:last-child {
+  border-bottom: none;
 }
