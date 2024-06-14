@@ -19,7 +19,6 @@ public class MovieService {
     @Autowired
     private MovieRepository movieRepository;
 
-
     public Optional<Movie> findMovie(int id){
         return movieRepository.findByMovieId(id);
     }

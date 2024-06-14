@@ -1,5 +1,6 @@
 package com.group12.rest2night.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bson.types.ObjectId;
@@ -23,7 +24,8 @@ public class Movie {
     private List<String> genres;
     //not included//??
     //private String trailerLine;
-    private double rate;
+    private String posterLink;
+    private ArrayList<Double> rate;
     private List<Comment> comments;
     //not included yet, but will be//!!
     //private int price;

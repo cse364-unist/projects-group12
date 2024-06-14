@@ -101,7 +101,7 @@ public class MovieServiceTest {
 
     @Test
     void testGetMoviesWith(){
-        Movie movie = new Movie(new ObjectId(), 5, "Test Movie", 2022, new ArrayList<>(), 4.5, new ArrayList<>());
+        Movie movie = new Movie(new ObjectId(), 5, "Test Movie", 2022, new ArrayList<>(), "https://somewhere", new ArrayList<>(), new ArrayList<>());
         List<Movie> listOfMovies = new ArrayList<>();
         listOfMovies.add(movie);
         List<String> genres = movie.getGenres();

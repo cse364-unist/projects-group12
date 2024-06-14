@@ -18,7 +18,7 @@ const MainPage = () => {
 
   return (
     <div className="main-container">
-      <h1>Welcome to the Movie App</h1>
+      <h1>Lets rest tonight</h1>
       <div className="movies-grid">
         {movies.map(movie => (
           <MovieCard key={movie.movieId} movie={movie} />

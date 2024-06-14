@@ -86,4 +86,5 @@ public class UserService {
         long points = user.getPoints();
         user.setPoints(points+10);
     }
+
 }

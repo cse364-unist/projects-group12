@@ -18,10 +18,12 @@ public class MovieTest {
         String title = "Test Movie";
         int year = 2022;
         List<String> genres = Arrays.asList("Action", "Adventure");
-        double rate = 4.5;
+        ArrayList<Double> rate = new ArrayList<>();
+        rate.add(4.5); rate.add(100.0);
         List<Comment> comments = new ArrayList<>();
+        String poster = "https://somewhere";
 
-        Movie movie = new Movie(id, movieId, title, year, genres, rate, comments);
+        Movie movie = new Movie(id, movieId, title, year, genres, poster, rate, comments);
 
         assertEquals(id, movie.getId());
         assertEquals(movieId, movie.getMovieId());
@@ -40,7 +42,8 @@ public class MovieTest {
         String title = "Test Movie";
         int year = 2022;
         List<String> genres = Arrays.asList("Action", "Adventure");
-        double rate = 4.5;
+        ArrayList<Double> rate = new ArrayList<>();
+        rate.add(4.5); rate.add(100.0);
         List<Comment> comments = new ArrayList<>();
 
         movie.setId(id);
@@ -72,20 +75,23 @@ public class MovieTest {
         int year2 = 2023;
         List<String> genres1 = Arrays.asList("Action", "Adventure");
         List<String> genres2 = Arrays.asList("Drama", "Romance");
-        double rate1 = 4.5;
-        double rate2 = 3.8;
+        ArrayList<Double> rate1 = new ArrayList<>();
+        rate1.add(4.5); rate1.add(100.0);
+        ArrayList<Double> rate2 = new ArrayList<>();
+        rate2.add(3.8); rate2.add(150.0);
         List<Comment> comments1 = new ArrayList<>();
         List<Comment> comments2 = new ArrayList<>();
+        String poster = "https://somewherer";
 
-        Movie movie1 = new Movie(id1, movieId1, title1, year1, genres1, rate1, comments1);
-        Movie movie2 = new Movie(id1, movieId1, title1, year1, genres1, rate1, comments1);
-        Movie movie3 = new Movie(id2, movieId1, title1, year1, genres1, rate1, comments1);
-        Movie movie4 = new Movie(id1, movieId2, title1, year1, genres1, rate1, comments1);
-        Movie movie5 = new Movie(id1, movieId1, title2, year1, genres1, rate1, comments1);
-        Movie movie6 = new Movie(id1, movieId1, title1, year2, genres1, rate1, comments1);
-        Movie movie7 = new Movie(id1, movieId1, title1, year1, genres2, rate1, comments1);
-        Movie movie8 = new Movie(id1, movieId1, title1, year1, genres1, rate2, comments1);
-        Movie movie9 = new Movie(id1, movieId1, title1, year1, genres1, rate1, comments2);
+        Movie movie1 = new Movie(id1, movieId1, title1, year1, genres1, poster, rate1, comments1);
+        Movie movie2 = new Movie(id1, movieId1, title1, year1, genres1, poster, rate1, comments1);
+        Movie movie3 = new Movie(id2, movieId1, title1, year1, genres1, poster, rate1, comments1);
+        Movie movie4 = new Movie(id1, movieId2, title1, year1, genres1, poster, rate1, comments1);
+        Movie movie5 = new Movie(id1, movieId1, title2, year1, genres1, poster, rate1, comments1);
+        Movie movie6 = new Movie(id1, movieId1, title1, year2, genres1, poster, rate1, comments1);
+        Movie movie7 = new Movie(id1, movieId1, title1, year1, genres2, poster, rate1, comments1);
+        Movie movie8 = new Movie(id1, movieId1, title1, year1, genres1, poster, rate2, comments1);
+        Movie movie9 = new Movie(id1, movieId1, title1, year1, genres1, poster, rate1, comments2);
 
         assertEquals(movie1, movie2);
         assertEquals(movie1.hashCode(), movie2.hashCode());
@@ -115,13 +121,15 @@ public class MovieTest {
         int year2 = 2023;
         List<String> genres1 = Arrays.asList("Action", "Adventure");
         List<String> genres2 = Arrays.asList("Drama", "Romance");
-        double rate1 = 4.5;
-        double rate2 = 3.8;
+        ArrayList<Double> rate1 = new ArrayList<>();
+        rate1.add(4.5); rate1.add(100.0);
+        ArrayList<Double> rate2 = new ArrayList<>();
+        rate2.add(3.8); rate2.add(150.0);
         List<Comment> comments1 = new ArrayList<>();
         List<Comment> comments2 = new ArrayList<>();
-
-        Movie movie1 = new Movie(id1, movieId1, title1, year1, genres1, rate1, comments1);
-        Movie movie2 = new Movie(id2, movieId2, title2, year2, genres2, rate2, comments2);
+        String poster = "https://somewhere";
+        Movie movie1 = new Movie(id1, movieId1, title1, year1, genres1, poster, rate1, comments1);
+        Movie movie2 = new Movie(id2, movieId2, title2, year2, genres2, poster, rate2, comments2);
 
         assertEquals(movie1.equals(movie2), false);
     }

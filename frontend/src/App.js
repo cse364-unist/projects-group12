@@ -38,8 +38,9 @@ const App = () => {
     <Router>
       <Header isLoggedIn={isLoggedIn} onLogout={handleLogout} />
       <Routes>
-        <Route path="/main" element={isLoggedIn ? <MainPage onLogout={handleLogout}/> : <Navigate to="/" />} />
-        <Route path="/" element={ isLoggedIn ? <Navigate to="/main" /> :
+        {/* <Route path="/" element={isLoggedIn ? <MainPage onLogout={handleLogout}/> : <Navigate to="/auth" />} /> */}
+        <Route path="/main" element={<MainPage onLogout={handleLogout}/>} />
+        <Route path="/auth" element={ isLoggedIn ? <Navigate to="/main" /> :
             <div className="App">
             <h1>Welcome Bratishka</h1>
             {isLogin ? (
