@@ -3,9 +3,9 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
 import MainPage from './components/MainPage';
-import './index.css';
 import Header from './components/Header';
-
+import MoviePage from './components/MoviePage';
+import './index.css';
 
 const App = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -33,26 +33,28 @@ const App = () => {
     localStorage.removeItem('isLoggedIn');
   };
 
-
   return (
     <Router>
       <Header isLoggedIn={isLoggedIn} onLogout={handleLogout} />
       <Routes>
-        {/* <Route path="/" element={isLoggedIn ? <MainPage onLogout={handleLogout}/> : <Navigate to="/auth" />} /> */}
-        <Route path="/main" element={<MainPage onLogout={handleLogout}/>} />
-        <Route path="/auth" element={ isLoggedIn ? <Navigate to="/main" /> :
+        <Route path="/main" element={<MainPage />} />
+        <Route 
+          path="/auth" 
+          element={isLoggedIn ? <Navigate to="/main" /> : (
             <div className="App">
-            <h1>Welcome Bratishka</h1>
-            {isLogin ? (
-              <LoginForm onLogin={handleLogin} />
-            ) : (
-              <RegisterForm onRegister={handleRegister} />
-            )}
-            <button className="toggle-button" onClick={() => setIsLogin(!isLogin)}>
-              {isLogin ? "Don't have an account? Register" : "Already have an account? Login"}
-            </button>
-          </div>
-        } />
+              <h1>Welcome Bratishka</h1>
+              {isLogin ? (
+                <LoginForm onLogin={handleLogin} />
+              ) : (
+                <RegisterForm onRegister={handleRegister} />
+              )}
+              <button className="toggle-button" onClick={() => setIsLogin(!isLogin)}>
+                {isLogin ? "Don't have an account? Register" : "Already have an account? Login"}
+              </button>
+            </div>
+          )} 
+        />
+        <Route path="/movie/:movieId" element={<MoviePage />} />
       </Routes>
     </Router>
   );
