@@ -21,7 +21,7 @@ const QuizPage = () => {
             fetchQuiz();
             localStorage.setItem('lastQuizDate', today); // Update the date after fetching the quiz
         } else {
-            const savedQuiz = localStorage.getItem('quiz');
+            const savedQuiz = localStorage.getItem('quiz'); // adding some comment
             if (savedQuiz) {
                 setQuiz(JSON.parse(savedQuiz));
             }
