@@ -112,12 +112,19 @@ button:hover {
 .nav-links li {
   margin-right: 20px;
 }
-
 .nav-links a {
   color: white;
   text-decoration: none;
 }
+.nav-button:hover,
+.quiz-button:hover {
+  background-color: #0056b3; /* Darker shade for hover effect */
+}
 
+.quiz-button {
+  margin-left: 10px; /* Adjust spacing between Wishlist and Quiz buttons */
+  background-color: #28a745; /* Green color specifically for the Quiz button */
+}
 .logout-button {
   background-color: #dc3545;
   color: white;
