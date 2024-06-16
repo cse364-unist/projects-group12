@@ -31,6 +31,12 @@ public class UserController {
         return ResponseEntity.ok("Movie added to wishlist successfully");
     }
 
+    @PostMapping("/{username}/wishList/delete")
+    public ResponseEntity<String> deleteFromWishlist(@PathVariable String username, @RequestParam int movieId) {
+        userService.deleteMovieFromWishlist(username, movieId);
+        return ResponseEntity.ok("Movie deleted from wishlist successfully");
+    }
+
 
     @GetMapping("/{username}/wishList")
     public ResponseEntity<?> getWishlistByUserId(@PathVariable String username) {

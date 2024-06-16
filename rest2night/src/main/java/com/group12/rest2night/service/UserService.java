@@ -1,6 +1,5 @@
 package com.group12.rest2night.service;
 
-import org.apache.maven.surefire.shared.lang3.ObjectUtils.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +31,21 @@ public class UserService {
         if (wishList == null) {
             wishList = new ArrayList<>();
         }
+        if(wishList.contains(movieId)){
+            return;
+        }
         wishList.add(movieId);
+        user.setWishList(wishList);
+        userRepository.save(user);
+    }
+
+    public void deleteMovieFromWishlist(String username, int movieId) {
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));
+        List<Integer> wishList = user.getWishList();
+        if (wishList == null) {
+            return;
+        }
+        wishList.remove(Integer.valueOf(movieId));
         user.setWishList(wishList);
         userRepository.save(user);
     }
@@ -70,7 +83,7 @@ public class UserService {
         ArrayList<Integer> list = new ArrayList<>();
         userRepository.findAll().stream()
                 .forEach(user -> {
-                            if((age == -1 || user.getAge() == age) && (gender == "" || (user.getGender() != null && user.getGender().toLowerCase().equals(gender))) && (occup == "" || (user.getOccupation() != null && user.getOccupation().toLowerCase().equals(occup)))){
+                            if((age == -1 || (user.getAge() == age)) && (gender == "" || (user.getGender() != null && user.getGender().toLowerCase().equals(gender))) && (occup == "" || (user.getOccupation() != null && user.getOccupation().toLowerCase().equals(occup)))){
                                 list.add(user.getUserId());
                             };
                         }

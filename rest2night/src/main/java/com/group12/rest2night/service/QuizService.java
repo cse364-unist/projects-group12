@@ -33,8 +33,4 @@ public class QuizService {
         return quizzes.get(randomIndex);
     }
 
-    public boolean checkAnswer(String quizId, String selectedAnswer) {
-        Optional<Quiz> quiz = quizRepository.findById(new ObjectId(quizId));
-        return quiz.map(value -> value.getAnswer().equals(selectedAnswer)).orElse(false);
-    }
 }

@@ -101,7 +101,7 @@ public class RecommendationService {
                     ));
             for (Integer k : sortedScores.keySet()) {
                 //NOTE: DECREASE THRESHOLD TO IMPROVE TIME EFFICIENCY
-                if (sortedScores.get(k) >= 3.0) {
+                if (sortedScores.get(k) >= 2.5) {
                     if (printedList.contains(k))
                         continue;
                     else

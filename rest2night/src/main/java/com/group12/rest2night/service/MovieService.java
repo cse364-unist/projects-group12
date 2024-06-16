@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,10 @@ public class MovieService {
     }
 
     public List<Movie> someMovies(){
-        return movieRepository.findAll().subList(0, 9);
+        List<Movie> movies = movieRepository.findAll();
+        Random random = new Random();
+        int randomInd = random.nextInt(movies.size() - 11);
+        return movies.subList(randomInd, randomInd + 10);
     }
 
     public void addComment(Comment comment, int id){

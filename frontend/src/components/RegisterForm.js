@@ -17,6 +17,7 @@ const RegisterForm = ({ onRegister }) => {
         await axios.post('/users/register', { username, password });
         console.log('Registration successful');
         onRegister(username);
+        localStorage.setItem('username', username);
       } catch (error) {
         console.error('Registration failed', error);
       }

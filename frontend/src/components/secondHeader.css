@@ -18,8 +18,13 @@
   
   
   .second-header {
+    justify-content: space-between;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-radius: 5px;
+    background-color: rgb(250, 250, 250);
     position: relative;
-    width: 100%;
+    width: auto;
   }
 
 .second-header form div {
@@ -32,4 +37,17 @@
 
 .second-header button {
     width: auto;
+    background-color: rgb(68, 65, 65);
+}
+
+.second-header button:hover{
+    background-color: rgb(46, 45, 45);
+}
+
+.rec-submit button{
+    background-color: rgb(39, 42, 122);
+}
+
+.rec-submit button:hover{
+    background-color: rgb(39, 42, 122);
 }

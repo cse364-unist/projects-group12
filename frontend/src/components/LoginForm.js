@@ -14,6 +14,7 @@ const LoginForm = ({ onLogin }) => {
       try {
         await axios.post('/users/login', { username, password });
         onLogin(username);
+        localStorage.setItem('username', username);
       } catch (error) {
         alert("Login failed")
         setPassword('');

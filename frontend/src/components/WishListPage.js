@@ -1,27 +1,47 @@
-// src/components/Wishlist.js
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Wishlist.css';
+import axios from '../api/axiosConfig';
 
 const Wishlist = () => {
   const [wishlist, setWishlist] = useState([]);
 
-  useEffect(() => {
-    // Fetch wishlist from local storage or server
-    const storedWishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
-    setWishlist(storedWishlist);
-  }, []);
-
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchWishlist = async () => {
+      const username = localStorage.getItem('username');
+      if (username) {
+        try {
+          const response = await axios.get(`/users/${username}/wishList`);
+          setWishlist(response.data);
+        } catch (error) {
+          console.log("SOME ERROR WHILE FETCHING WISH LIST", error);
+        }
+      } else {
+        navigate('/auth');
+      }
+    };
+    fetchWishlist();
+  }, [navigate]);
+
 
   const handleWatch = (movieId) => {
     navigate(`/movie/${movieId}`);
   };
 
-  const handleDelete = (movieId) => {
+  const handleDelete = async (movieId) => {
     const updatedWishlist = wishlist.filter(movie => movie.movieId !== movieId);
     setWishlist(updatedWishlist);
-    localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
+    const username = localStorage.getItem('username');
+    try{
+      await axios.post(`/users/${username}/wishList/delete?movieId=${movieId}`);
+      console.log("SUCCESS deleting from WL");
+    } catch(error){
+      console.log("SOMETHING WENT WRONG WHILE deleting movie from WL", error);
+    }
+  
   };
 
   return (
