@@ -1,38 +1,37 @@
-\# Movie Application - Rest2Night
+# Movie Application - Rest2Night
 
-Welcome to our Movie Application! This application is designed to
-provide you with an enjoyable and personalized movie experience. Explore
-a wide range of movies, add your favorites to your wishlist, participate
-in daily quizzes, and unlock movies with earned coins.
+Welcome to our Movie Application! This application is designed to provide you with an enjoyable and personalized movie experience. Explore a wide range of movies, add your favorites to your wishlist, participate in daily quizzes, and unlock movies with earned coins.
 
-\## Table of Contents
+## Table of Contents
 
-1\. \[Features\](#features) 2. \[Installation\](#installation) 3.
-\[Usage\](#usage)  - \[Main Page\](#main-page)  - \[Movie
-Page\](#movie-page)  - \[Wishlist\](#wishlist)  - \[Quizzes\](#quizzes)
-4. \[Recommendations\](#recommendations) 5. \[User
-Authentication\](#user-authentication) 6. \[Coin System\](#coin-system)
-7. \[Filters\](#filters)
+1. [Features](#features)
+2. [Installation](#installation)
+3. [Usage](#usage)
+   - [Main Page](#main-page)
+   - [Movie Page](#movie-page)
+   - [Wishlist](#wishlist)
+   - [Quizzes](#quizzes)
+4. [Recommendations](#recommendations)
+5. [User Authentication](#user-authentication)
+6. [Coin System](#coin-system)
+7. [Filters](#filters)
 
-\## Features
+## Features
 
-\- \*\*Browse Movies\*\*: Scroll through a list of movies on the main
-page. - \*\*View Movie Details\*\*: Click on \"View Details\" to see
-detailed information about any movie. - \*\*Add to Wishlist\*\*: Add
-movies to your wishlist for easy access later. - \*\*Rate and
-Comment\*\*: Rate and leave comments on movie pages. - \*\*Daily
-Quizzes\*\*: Answer daily quizzes to earn coins. - \*\*Unlock
-Movies\*\*: Use earned coins to unlock and view certain movies. -
-\*\*Filters\*\*: Find movies by genres, occupation, age, gender, and
-occasion-based recommendations.
+- **Browse Movies**: Scroll through a list of movies on the main page.
+- **View Movie Details**: Click on "View Details" to see detailed information about any movie.
+- **Add to Wishlist**: Add movies to your wishlist for easy access later.
+- **Rate and Comment**: Rate and leave comments on movie pages.
+- **Daily Quizzes**: Answer daily quizzes to earn coins.
+- **Unlock Movies**: Use earned coins to unlock and view certain movies.
+- **Filters**: Find movies by genres, occupation, age, gender, and occasion-based recommendations.
 
-\## Installation
+## Installation
 
-1\. Clone the repository: \`\`\`bash git clone
-https://github.com/cse364-unist/projects-group12.git \`\`\` 2. Navigate
-to the project directory: \`\`\`bash cd Rest2nightApplication \`\`\` 3.
-Install dependencies: \`\`\`bash npm install \`\`\` 4. Start the
-application: \`\`\`bash npm start \`\`\`
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/cse364-unist/projects-group12.git
+
 
 \## Usage
 
