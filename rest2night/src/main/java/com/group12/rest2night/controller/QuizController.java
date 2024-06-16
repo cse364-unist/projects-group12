@@ -10,14 +10,21 @@ import org.springframework.web.bind.annotation.RestController;
 import com.group12.rest2night.entity.Quiz;
 import com.group12.rest2night.service.QuizService;
 
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/quiz")
 public class QuizController {
+
     @Autowired
     private QuizService quizService;
 
     @GetMapping
-    public ResponseEntity<Quiz> getQuiz(){
-        return new ResponseEntity<Quiz>(quizService.randomQuiz(), HttpStatus.OK);
+    public ResponseEntity<Quiz> getQuiz() {
+        return new ResponseEntity<>(quizService.randomQuiz(), HttpStatus.OK);
     }
+
 }

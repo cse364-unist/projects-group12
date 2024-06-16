@@ -1,6 +1,6 @@
 // MoviePage.js
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from '../api/axiosConfig';
 import './mainpage.css';
 
@@ -13,6 +13,8 @@ const MoviePage = () => {
   const [hoverRating, setHoverRating] = useState(0);
   const [error, setError] = useState('');
   const [notification, setNotification] = useState('');
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get(`/movies/${movieId}`)
@@ -44,20 +46,21 @@ const MoviePage = () => {
     setError('');
   };
 
-  const handleAddToWishlist = () => {
-    let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
-    if (!wishlist.some(m => m.movieId === movie.movieId)) {
-      wishlist.push(movie);
-      localStorage.setItem('wishlist', JSON.stringify(wishlist));
-      setNotification('Movie successfully added to wishlist!');
-      setTimeout(() => {
-        setNotification('');
-      }, 3000); // Hide the notification after 3 seconds
+  const handleAddToWishlist = async () => {
+    const username = localStorage.getItem('username');
+    if(username){
+      try{
+        await axios.post(`/users/${username}/wishList/add?movieId=${movie.movieId}`);
+        console.log("SUCCESS adding to WL");
+        setNotification('Movie successfully added to wishlist!');
+        setTimeout(() => {
+          setNotification('');
+        }, 3000);
+      } catch(error){
+        console.log("SOMETHING WENT WRONG WHILE ADDING movie TO WL", error);
+      }
     } else {
-      setNotification('Movie is already in the wishlist.');
-      setTimeout(() => {
-        setNotification('');
-      }, 3000);
+      navigate('/auth');
     }
   };
   

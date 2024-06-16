@@ -13,10 +13,16 @@ const Header = ({ isLoggedIn, onLogout }) => {
           {isLoggedIn && <li><button className="nav-button" onClick={() => navigate('/wishlist')}>Wishlist</button></li>}
         </ul>
       </nav>
-      {isLoggedIn ? (
-        <button className="logout-button" onClick={onLogout}>Logout</button>
-      ) : (
-        <button className="logout-button" onClick={() => navigate('/auth')}>Login</button>
+      {isLoggedIn && (
+        <div className="header-buttons">
+          <Link to="/quiz" className="quiz-button">Take Quiz</Link>
+          <button className="logout-button" onClick={onLogout}>Logout</button>
+        </div>
+      )}
+      {!isLoggedIn && (
+        <div className="header-buttons">
+          <button className="logout-button" onClick={() => navigate('/auth')}>Login</button>
+        </div>
       )}
     </header>
   );

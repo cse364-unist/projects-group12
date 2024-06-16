@@ -53,38 +53,71 @@ const genders = ["Male", "Female"];
 
 const genMap = {"": "", "Male" : "M", "Female" : "F"}
 
+const occasions = ["Family Night", "Date Night"];
+const occMap = {
+    "Family Night": "familyNight",
+    "Date Night": "dateNight",
+}
 
-const SecondHeader = ({recommend}) => {
+
+const SecondHeader = ({recommend1, recommend2, onRandom}) => {
   const [dropdownVisibleGenres, setDropdownVisibleGenres] = useState(false);
   const [dropdownVisibleOccup, setDropdownVisibleOccup] = useState(false);
   const [dropdownVisibleGender, setDropdownVisibleGender] = useState(false);
   const [dropdownVisibleAge, setDropdownVisibleAge] = useState(false);
+  const [dropdownVisibleOccasion, setDropdownVisibleOccasion] = useState(false);
 
   const [selectedGenres, setSelectedGenres] = useState([]);
   const [occup, setOccup] = useState('');
   const [gender, setGender] = useState('');
   const [age, setAge] = useState('');
+  const [occasion, setOccasion] = useState('');
   
   const dropdownRef = useRef(null);
 
   const toggleDropdownGenres = (e) => {
     e.preventDefault();
     setDropdownVisibleGenres(!dropdownVisibleGenres);
+    setDropdownVisibleOccasion(false);
+    setDropdownVisibleAge(false);
+    setDropdownVisibleGender(false);
+    setDropdownVisibleOccup(false);
   };
 
   const toggleDropdownOccup = (e) => {
     e.preventDefault();
     setDropdownVisibleOccup(!dropdownVisibleOccup);
+    setDropdownVisibleOccasion(false);
+    setDropdownVisibleAge(false);
+    setDropdownVisibleGender(false);
+    setDropdownVisibleGenres(false);
   }
 
   const toggleDropdownGender = (e) => {
     e.preventDefault();
     setDropdownVisibleGender(!dropdownVisibleGender);
+    setDropdownVisibleOccasion(false);
+    setDropdownVisibleAge(false);
+    setDropdownVisibleGenres(false);
+    setDropdownVisibleOccup(false);
   }
 
   const toggleDropdownAge = (e) => {
     e.preventDefault();
     setDropdownVisibleAge(!dropdownVisibleAge);
+    setDropdownVisibleOccasion(false);
+    setDropdownVisibleGender(false);
+    setDropdownVisibleGenres(false);
+    setDropdownVisibleOccup(false);
+  }
+
+  const toggleDropdownOccasion = (e) =>{
+    e.preventDefault();
+    setDropdownVisibleOccasion(!dropdownVisibleOccasion);
+    setDropdownVisibleGender(false);
+    setDropdownVisibleGenres(false);
+    setDropdownVisibleOccup(false);
+    setDropdownVisibleAge(false);
   }
 
   const handleCheckboxChange = (option) => {
@@ -107,6 +140,21 @@ const SecondHeader = ({recommend}) => {
     setAge(option === age ? "" : option);
   }
 
+  const handleOccasionChange = (option) => {
+    setDropdownVisibleAge(false);
+    setDropdownVisibleGender(false);
+    setDropdownVisibleGenres(false);
+    setDropdownVisibleOccup(false);
+    setOccasion(option);
+    recommend2(occMap[option]);
+    setOccasion('');
+    setAge('');
+    setGender('');
+    setOccup('');
+    setSelectedGenres([]);
+    setDropdownVisibleOccasion(false);
+  }
+
 //   useEffect(() => {
 //     const handleClickOutside = (event) => {
 //       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -122,6 +170,10 @@ const SecondHeader = ({recommend}) => {
 
   const recommendTypeOne = (e) => {
     e.preventDefault();
+    setDropdownVisibleAge(false);
+    setDropdownVisibleGender(false);
+    setDropdownVisibleGenres(false);
+    setDropdownVisibleOccup(false);
     if(selectedGenres.length < 1) {
         alert("Please choose at least one genre");
         return;
@@ -132,15 +184,30 @@ const SecondHeader = ({recommend}) => {
         occupation: occup,
         genre: selectedGenres.join('|')
     }
-    recommend(data);
+    recommend1(data);
     setAge('');
     setGender('');
     setOccup('');
     setSelectedGenres([]);
   }
 
+  const handleRandom = () => {
+    onRandom();
+    setDropdownVisibleAge(false);
+    setDropdownVisibleGender(false);
+    setDropdownVisibleGenres(false);
+    setDropdownVisibleOccup(false);
+    setOccasion('');
+    setAge('');
+    setGender('');
+    setOccup('');
+    setSelectedGenres([]);
+    setDropdownVisibleOccasion(false);
+  }
+
   return (
     <div className="second-header">
+        <div style={{display: "flex"}}>
         <form onSubmit={recommendTypeOne}>
         <div>
             <button onClick={toggleDropdownGender} id="dropdownButton">
@@ -225,10 +292,34 @@ const SecondHeader = ({recommend}) => {
             </div>
         )}
         </div>
-        <div>
+        <div className='rec-submit'>
             <button type="submit">Recommend</button>
         </div>
       </form>
+      </div>
+      <div>
+        <button onClick={toggleDropdownOccasion} id="dropdownButton">
+            Occasion
+        </button>
+        {dropdownVisibleOccasion && (
+            <div className="dropdown-content" ref={dropdownRef} >
+            {occasions.map((option) => (
+                <label key={option}>
+                <input
+                    type="checkbox"
+                    value={option}
+                    checked={occasion == option}
+                    onChange={() => handleOccasionChange(option)}
+                />
+                {option}
+                </label>
+            ))}
+            </div>
+        )}
+        </div>
+        <div>
+            <button onClick={handleRandom}>Random</button>
+        </div>
     </div>
   );
 }
