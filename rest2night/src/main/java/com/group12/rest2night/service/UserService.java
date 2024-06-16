@@ -41,10 +41,10 @@ public class UserService {
         User user = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));
         List<Movie> movies = new ArrayList<>();
         user.getWishList().stream()
-                        .forEach(movieId -> {
-                            Movie movie = movieService.findMovie(movieId).orElse(null);
-                            movies.add(movie);
-                        });
+                .forEach(movieId -> {
+                    Movie movie = movieService.findMovie(movieId).orElse(null);
+                    movies.add(movie);
+                });
         return movies;
     }
 
@@ -52,7 +52,7 @@ public class UserService {
         user.setPoints(100);
         return userRepository.save(user);
     }
-    
+
     public boolean isValidUser(String username, String password) {
         Optional<User> userOptional = userRepository.findByUsername(username);
         if (userOptional.isPresent()) {
@@ -69,13 +69,13 @@ public class UserService {
     public ArrayList<Integer> getUsersWith(String occup, int age, String gender){
         ArrayList<Integer> list = new ArrayList<>();
         userRepository.findAll().stream()
-                                    .forEach(user -> {
-                                        if((age == -1 || user.getAge() == age) && (gender == "" || (user.getGender() != null && user.getGender().toLowerCase().equals(gender))) && (occup == "" || (user.getOccupation() != null && user.getOccupation().toLowerCase().equals(occup)))){
-                                            list.add(user.getUserId());
-                                        };
-                                    }
-                                    );
-        return list;            
+                .forEach(user -> {
+                            if((age == -1 || user.getAge() == age) && (gender == "" || (user.getGender() != null && user.getGender().toLowerCase().equals(gender))) && (occup == "" || (user.getOccupation() != null && user.getOccupation().toLowerCase().equals(occup)))){
+                                list.add(user.getUserId());
+                            };
+                        }
+                );
+        return list;
     }
 
     public List<Rating> getRatingsOfUser(int userId){
@@ -85,7 +85,7 @@ public class UserService {
     public void addPointsToUser(String username){
         User user = userRepository.findByUsername(username).orElseThrow();
         long points = user.getPoints();
-        user.setPoints(points+10);
+        user.setPoints(points + 10);
+        userRepository.save(user); // Save the updated user
     }
-
 }

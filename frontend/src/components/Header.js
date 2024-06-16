@@ -1,3 +1,4 @@
+// Header.js
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../index.css';
@@ -13,6 +14,7 @@ const Header = ({ isLoggedIn, onLogout }) => {
           {isLoggedIn && <li><button className="nav-button" onClick={() => navigate('/wishlist')}>Wishlist</button></li>}
         </ul>
       </nav>
+      <Link to="/quiz" className="quiz-button">Take Quiz</Link>
       {isLoggedIn ? (
         <button className="logout-button" onClick={onLogout}>Logout</button>
       ) : (

@@ -4,8 +4,10 @@ import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
 import MainPage from './components/MainPage';
 import Header from './components/Header';
+import QuizPage from './components/QuizPage'; // Import the new QuizPage component
 import MoviePage from './components/MoviePage';
 import WishlistPage from './components/WishListPage';
+
 import './index.css';
 
 const App = () => {
@@ -33,6 +35,7 @@ const App = () => {
     setIsLoggedIn(false);
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('username');
+
   };
 
   return (
@@ -40,6 +43,7 @@ const App = () => {
       <Header isLoggedIn={isLoggedIn} onLogout={handleLogout} />
       <Routes>
         <Route path="/main" element={<MainPage />} />
+        <Route path="/quiz" element={<QuizPage />} /> {/* Add route for QuizPage */}
         <Route 
           path="/auth" 
           element={isLoggedIn ? <Navigate to="/main" /> : (
@@ -57,7 +61,8 @@ const App = () => {
           )} 
         />
         <Route path="/movie/:movieId" element={<MoviePage />} />
-        <Route path="/wishlist" element={<WishlistPage />} />
+         <Route path="/wishlist" element={<WishlistPage />} />
+
       </Routes>
     </Router>
   );
