@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from '../api/axiosConfig';
-import './MoviePage.css';
+import './mainpage.css';
 
 const MoviePage = () => {
   const { movieId } = useParams();
@@ -12,6 +12,7 @@ const MoviePage = () => {
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
   const [error, setError] = useState('');
+  const [notification, setNotification] = useState('');
 
   useEffect(() => {
     axios.get(`/movies/${movieId}`)
@@ -32,7 +33,9 @@ const MoviePage = () => {
     const comment = {
       text: newComment,
       date: new Date().toISOString().split('T')[0],
+      time: new Date().toLocaleTimeString(),
       rating: rating,
+      
     };
     setComments([...comments, comment]);
     setNewComment('');
@@ -41,6 +44,23 @@ const MoviePage = () => {
     setError('');
   };
 
+  const handleAddToWishlist = () => {
+    let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+    if (!wishlist.some(m => m.movieId === movie.movieId)) {
+      wishlist.push(movie);
+      localStorage.setItem('wishlist', JSON.stringify(wishlist));
+      setNotification('Movie successfully added to wishlist!');
+      setTimeout(() => {
+        setNotification('');
+      }, 3000); // Hide the notification after 3 seconds
+    } else {
+      setNotification('Movie is already in the wishlist.');
+      setTimeout(() => {
+        setNotification('');
+      }, 3000);
+    }
+  };
+  
   if (!movie) return <div>Loading...</div>;
 
   return (
@@ -50,9 +70,10 @@ const MoviePage = () => {
         <div className="details">
           <h1>{movie.title}</h1>
           <p>Genres: {movie.genres.join(', ')}</p>
-          <p>Rating: ⭐ {movie.rating}/5</p>
+          <p>Rating: ⭐ {movie.rate[0].toFixed(1)}/5</p>
           <button className="watch-button">Watch</button>
-          <button className="wishlist-button">Add to Wishlist</button>
+          <button className="wishlist-button" onClick={handleAddToWishlist}>Add to Wishlist</button>
+          {notification && <p className="notification">{notification}</p>}
         </div>
       </div>
       <div className="comments-section">
@@ -85,9 +106,9 @@ const MoviePage = () => {
         <div className="comments-list">
           {comments.map((comment, index) => (
             <div key={index} className="comment">
-              <p>{comment.date}</p>
+              <p>{comment.time} {comment.date}</p>
               <p>{comment.text}</p>
-              <p>Rating: {'⭐'.repeat(comment.rating)}</p>
+              <p>Rating:  {'⭐'.repeat(comment.rating)}</p>
             </div>
           ))}
         </div>

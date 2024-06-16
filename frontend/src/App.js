@@ -5,6 +5,7 @@ import RegisterForm from './components/RegisterForm';
 import MainPage from './components/MainPage';
 import Header from './components/Header';
 import MoviePage from './components/MoviePage';
+import WishlistPage from './components/WishListPage';
 import './index.css';
 
 const App = () => {
@@ -31,6 +32,7 @@ const App = () => {
   const handleLogout = () => {
     setIsLoggedIn(false);
     localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('username');
   };
 
   return (
@@ -55,6 +57,7 @@ const App = () => {
           )} 
         />
         <Route path="/movie/:movieId" element={<MoviePage />} />
+        <Route path="/wishlist" element={<WishlistPage />} />
       </Routes>
     </Router>
   );

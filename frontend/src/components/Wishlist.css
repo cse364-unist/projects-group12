@@ -1,0 +1,49 @@
+/* src/components/Wishlist.css */
+.wishlist-container {
+    padding: 20px;
+  }
+  
+  .wishlist-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .wishlist-card {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+    width: 300px;
+    height: 650px;
+  }
+  
+  .wishlist-image {
+    width: 300px; 
+    height: 450px; 
+    object-fit: cover; 
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  
+  .delete-button {
+    background-color: red;
+    color: white;
+    width: 30%;
+  }
+
+  .delete-button:hover{
+    background-color: #FF7276;
+  }
+  
+  .watch1-button{
+    position: relative;
+    background-color: black;
+    color: white;
+    width: 30%;
+    margin-right: 30px; 
+  }
+
+  .watch1-button:hover{
+    background-color: #454545;
+  }
+
