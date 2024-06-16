@@ -123,7 +123,15 @@ button:hover {
 
 .quiz-button {
   margin-left: 10px; /* Adjust spacing between Wishlist and Quiz buttons */
-  background-color: #28a745; /* Green color specifically for the Quiz button */
+  background-color: #28a745; /* Green color for the Quiz button */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  text-decoration: none;
+  display: inline-block;
 }
 .logout-button {
   background-color: #dc3545;

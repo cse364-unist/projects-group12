@@ -7,14 +7,25 @@ const QuizPage = () => {
     const [selectedAnswer, setSelectedAnswer] = useState('');
     const [result, setResult] = useState(null);
     const [score, setScore] = useState(() => {
-        // Initialize score from localStorage, or default to 0
         const savedScore = localStorage.getItem('quizScore');
         return savedScore ? parseInt(savedScore, 10) : 0;
     });
+    const [completed, setCompleted] = useState(false);
     const username = localStorage.getItem('username'); // Assuming you store the username in local storage
 
     useEffect(() => {
-        fetchQuiz();
+        const lastQuizDate = localStorage.getItem('lastQuizDate');
+        const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
+
+        if (lastQuizDate !== today) {
+            fetchQuiz();
+            localStorage.setItem('lastQuizDate', today); // Update the date after fetching the quiz
+        } else {
+            const savedQuiz = localStorage.getItem('quiz');
+            if (savedQuiz) {
+                setQuiz(JSON.parse(savedQuiz));
+            }
+        }
     }, []);
 
     const fetchQuiz = async () => {
@@ -22,6 +33,7 @@ const QuizPage = () => {
             const response = await axios.get('/quiz');
             console.log('Quiz fetched:', response.data); // Debug log
             setQuiz(response.data);
+            localStorage.setItem('quiz', JSON.stringify(response.data)); // Save quiz to localStorage
         } catch (error) {
             console.error('Error fetching quiz:', error);
         }
@@ -30,22 +42,17 @@ const QuizPage = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        // Check if selected answer is correct
         const isCorrect = selectedAnswer === quiz.answer;
-
-        // Display result
         setResult(isCorrect ? 'Correct!' : 'Incorrect.');
 
-        // Update score
         if (isCorrect) {
             const newScore = score + 10;
             setScore(newScore); // Increment score by 10
             localStorage.setItem('quizScore', newScore); // Save score to localStorage
         }
 
-        // Fetch next quiz
-        fetchQuiz();
         setSelectedAnswer('');
+        setCompleted(true);
     };
 
     if (!quiz) return <div>Loading...</div>;
@@ -56,25 +63,35 @@ const QuizPage = () => {
                 <h2>Quiz</h2>
                 <div className="score">Score: {score}</div>
             </div>
-            <div className="question">{quiz.question}</div>
-            <form onSubmit={handleSubmit}>
-                {quiz.answers.map((answer, index) => (
-                    <div key={index} className="answer-option">
-                        <label>
-                            <input
-                                type="radio"
-                                name="answer"
-                                value={answer}
-                                checked={selectedAnswer === answer}
-                                onChange={() => setSelectedAnswer(answer)}
-                            />
-                            {answer}
-                        </label>
-                    </div>
-                ))}
-                <button type="submit" className="submit-button">Submit</button>
-            </form>
-            {result && <div className={`result ${result === 'Correct!' ? 'correct-answer' : 'incorrect-answer'}`}>{result}</div>}
+            {!completed ? (
+                <>
+                    <div className="question">{quiz.question}</div>
+                    <form onSubmit={handleSubmit}>
+                        {quiz.answers.map((answer, index) => (
+                            <div key={index} className="answer-option">
+                                <label>
+                                    <input
+                                        type="radio"
+                                        name="answer"
+                                        value={answer}
+                                        checked={selectedAnswer === answer}
+                                        onChange={() => setSelectedAnswer(answer)}
+                                    />
+                                    {answer}
+                                </label>
+                            </div>
+                        ))}
+                        <button type="submit" className="submit-button">Submit</button>
+                    </form>
+                    {result && <div className={`result ${result === 'Correct!' ? 'correct-answer' : 'incorrect-answer'}`}>{result}</div>}
+                </>
+            ) : (
+                <div className="come-back-tomorrow">
+                    <h3>Great job!</h3>
+                    <p>Thanks for participating in today's quiz. Come back tomorrow for another question! 🎉</p>
+                    <p>Meanwhile, why not sharpen your wits with some fun facts or puzzles?</p>
+                </div>
+            )}
         </div>
     );
 };
