@@ -7,23 +7,23 @@ const Header = ({ isLoggedIn, onLogout }) => {
 
   return (
     <header className="header">
-      <nav>
-        <ul className="nav-links">
-          <li><Link to="/main">Main</Link></li>
+      <nav className="nav-container">
+        <li className='main-page'><Link to="/main">Rest2Night</Link></li>
+        <ul className="nav-buttons">
           {isLoggedIn && <li><button className="nav-button" onClick={() => navigate('/wishlist')}>Wishlist</button></li>}
+          {isLoggedIn && (
+            <li className="header-buttons">
+              <Link to="/quiz" className="quiz-button">Take Quiz</Link>
+              <button className="logout-button" onClick={onLogout}>Logout</button>
+            </li>
+          )}
+          {!isLoggedIn && (
+            <li className="header-buttons">
+              <button className="logout-button" onClick={() => navigate('/auth')}>Login</button>
+            </li>
+          )}
         </ul>
       </nav>
-      {isLoggedIn && (
-        <div className="header-buttons">
-          <Link to="/quiz" className="quiz-button">Take Quiz</Link>
-          <button className="logout-button" onClick={onLogout}>Logout</button>
-        </div>
-      )}
-      {!isLoggedIn && (
-        <div className="header-buttons">
-          <button className="logout-button" onClick={() => navigate('/auth')}>Login</button>
-        </div>
-      )}
     </header>
   );
 };

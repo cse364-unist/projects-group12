@@ -47,8 +47,8 @@ input {
 button {
   width: 100%;
   padding: 10px;
-  background-color: #28a745;
   color: white;
+  background-color: #1A6E2B;
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -91,58 +91,67 @@ button:hover {
   border-bottom: none;
 }
 
-
+/*header*/
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  background-color: #282c34;
-  color: white;
+  background-color: #333;
 }
 
-.nav-links {
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
+
+.nav-buttons {
+  display: flex;
   list-style: none;
-  padding: 0;
   margin: 0;
+  padding: 0;
+}
+
+.nav-buttons li {
+  margin-left: 10px;
+}
+
+.header-buttons {
   display: flex;
 }
 
-.nav-links li {
-  margin-right: 20px;
-}
-.nav-links a {
-  color: white;
-  text-decoration: none;
-}
-.nav-button:hover,
-.quiz-button:hover {
-  background-color: #0056b3; /* Darker shade for hover effect */
-}
-
-.quiz-button {
-  margin-left: 10px; /* Adjust spacing between Wishlist and Quiz buttons */
-  background-color: #28a745; /* Green color for the Quiz button */
-  color: white;
+.header-buttons .quiz-button,
+.header-buttons .logout-button, 
+.nav-button {
+  margin-left: 10px;
+  background-color: #222222;
+  color: #f4f4f4;
   border: none;
-  border-radius: 4px;
-  padding: 10px 20px;
+  padding: 10px 15px;
   cursor: pointer;
-  font-size: 16px;
   text-decoration: none;
   display: inline-block;
-}
-.logout-button {
-  background-color: #504d4d;
-  color: white;
-  border: none;
+  white-space: nowrap; 
   border-radius: 5px;
-  padding: 10px 20px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  width: fit-content;
 }
 
-.logout-button:hover{
-  background-color: #b12626;
+.header-buttons .logout-button:hover {
+  background-color: #D32F2F;
+}
+
+.header-buttons .quiz-button:hover, 
+.nav-button:hover {
+  background-color: #333;
+}
+
+.main-page a {
+  text-decoration: none; 
+  color: #f4f4f4;
+}
+
+.main-page {
+  margin-right: auto;
+  font-size: 35px;
 }
