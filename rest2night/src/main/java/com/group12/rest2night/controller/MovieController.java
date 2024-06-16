@@ -39,4 +39,10 @@ public class MovieController {
         return ResponseEntity.ok(movieService.allMovies());
     }
 
+    @GetMapping("/some")
+    public ResponseEntity<?> someMovies(){
+        return ResponseEntity.ok(movieService.someMovies());
+    }
+
+
 }

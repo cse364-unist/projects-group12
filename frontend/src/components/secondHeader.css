@@ -1,0 +1,35 @@
+.second-header {
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+    padding: 10px 20px;
+    box-shadow: rgba(0, 0, 0, 0.1);
+    color: white;
+  }
+  
+  .second-header form{
+    display: contents;
+  }
+    
+  .second-header div{
+    padding-right: 5px;
+    padding-left: 5px;
+  }
+  
+  
+  .second-header {
+    position: relative;
+    width: 100%;
+  }
+
+.second-header form div {
+    margin-bottom: 0px;
+  }
+
+.second-header input {
+    width: auto;
+}
+
+.second-header button {
+    width: auto;
+}

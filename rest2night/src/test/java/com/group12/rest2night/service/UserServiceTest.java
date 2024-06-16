@@ -158,7 +158,11 @@ public class UserServiceTest {
     void testGetUsersWith(){
         List<User> listOfUsers = new ArrayList<>();
         User user = new User(new ObjectId(), 123, "testUser", "password", new ArrayList<>(), 100L, new ArrayList<>(), 25, "Engineer", "F");
+        User user2 = new User();
+        user2.setUsername("test2");
+        user2.setPassword("password");
         listOfUsers.add(user);
+        listOfUsers.add(user2);
 
         when(userRepository.findAll()).thenReturn(listOfUsers);
 
@@ -166,13 +170,13 @@ public class UserServiceTest {
         ArrayList<Integer> list2 =  userService.getUsersWith("programmer", 25, "f");
         ArrayList<Integer> list3 =  userService.getUsersWith("engineer", 25, "m");
         ArrayList<Integer> list4 =  userService.getUsersWith("engineer", 56, "f");
-        ArrayList<Integer> list5 =  userService.getUsersWith("", -1, "");
+        ArrayList<Integer> list5 =  userService.getUsersWith("some", -1, "some");
 
         assertEquals(1, list.size());
         assertEquals(0, list3.size());
         assertEquals(0, list2.size());
         assertEquals(0, list4.size());
-        assertEquals(1, list5.size());
+        assertEquals(2, list5.size());
     }
 
     @Test

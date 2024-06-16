@@ -1,5 +1,6 @@
 package com.group12.rest2night.service;
 
+import org.apache.maven.surefire.shared.lang3.ObjectUtils.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -69,7 +70,7 @@ public class UserService {
         ArrayList<Integer> list = new ArrayList<>();
         userRepository.findAll().stream()
                                     .forEach(user -> {
-                                        if((age == -1 || user.getAge() == age) && (gender == "" || user.getGender().toLowerCase().equals(gender)) && (occup == "" || user.getOccupation().toLowerCase().equals(occup))){
+                                        if((age == -1 || user.getAge() == age) && (gender == "" || (user.getGender() != null && user.getGender().toLowerCase().equals(gender))) && (occup == "" || (user.getOccupation() != null && user.getOccupation().toLowerCase().equals(occup)))){
                                             list.add(user.getUserId());
                                         };
                                     }

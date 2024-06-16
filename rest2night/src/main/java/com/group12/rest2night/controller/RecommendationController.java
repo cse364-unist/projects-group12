@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,7 +22,7 @@ public class RecommendationController {
     private RecommendationService recommendationService;
 
 
-    @GetMapping("/recommendation/type1")
+    @PostMapping("/recommendation/type1")
     public ResponseEntity<List<Movie>> getMovies(@RequestBody String input) {
         try{
             JSONObject js = new JSONObject(input.toLowerCase());

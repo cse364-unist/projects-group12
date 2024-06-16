@@ -71,7 +71,7 @@ $ curl -X GET http://localhost:8080/recommendation/type1 \
 "occupation" : "scientist", "genre" : "Action|War"}'
 ```
 
-### Type 2: Get recommended movies for an occasion(=Family Night)
+### Type 2: Get recommended movies based on an occasion(=Family Night)
 ```bash
 $ curl -v  http://localhost:8080/recommendation/type2/familyNight
 ```

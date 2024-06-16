@@ -27,6 +27,10 @@ public class MovieService {
         return movieRepository.findAll();
     }
 
+    public List<Movie> someMovies(){
+        return movieRepository.findAll().subList(0, 9);
+    }
+
     public void addComment(Comment comment, int id){
         comment.setTimestamp(LocalDateTime.now());
         Movie movie = findMovie(id).orElse(null);
