@@ -3,30 +3,39 @@ import axios from '../api/axiosConfig';
 import './QuizPage.css'; // Import your custom CSS for QuizPage styling
 
 const QuizPage = () => {
+    const username = localStorage.getItem('username'); // Assuming you store the username in local storage
+    const userCoinsKey = username ? `${username}_quizScore` : 'quizScore'; // Renamed from userScoreKey to userCoinsKey for clarity
+
     const [quiz, setQuiz] = useState(null);
     const [selectedAnswer, setSelectedAnswer] = useState('');
     const [result, setResult] = useState(null);
-    const [score, setScore] = useState(() => {
-        const savedScore = localStorage.getItem('quizScore');
-        return savedScore ? parseInt(savedScore, 10) : 0;
+    const [coins, setCoins] = useState(() => {  // Renamed from score to coins
+        const savedCoins = localStorage.getItem(userCoinsKey);
+        return savedCoins ? parseInt(savedCoins, 10) : 0; // Retrieve coins specific to the user
     });
-    const [completed, setCompleted] = useState(false);
-    const username = localStorage.getItem('username'); // Assuming you store the username in local storage
+    const quizCompletionKey = username ? `${username}_completedQuiz` : null;
+
+    const [completed, setCompleted] = useState(() => {
+        // Check if the user has already completed the quiz
+        return localStorage.getItem(quizCompletionKey) === 'true';
+    });
 
     useEffect(() => {
         const lastQuizDate = localStorage.getItem('lastQuizDate');
         const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
 
-        if (lastQuizDate !== today) {
+        if (!lastQuizDate || lastQuizDate !== today || localStorage.getItem(quizCompletionKey) !== 'true') {
             fetchQuiz();
             localStorage.setItem('lastQuizDate', today); // Update the date after fetching the quiz
+            setCompleted(false); // Reset completed status if it's a new day
+            localStorage.removeItem(quizCompletionKey); // Reset completion flag in local storage
         } else {
-            const savedQuiz = localStorage.getItem('quiz'); // adding some comment
+            const savedQuiz = localStorage.getItem('quiz'); // Retrieve saved quiz
             if (savedQuiz) {
                 setQuiz(JSON.parse(savedQuiz));
             }
         }
-    }, []);
+    }, [quizCompletionKey]);
 
     const fetchQuiz = async () => {
         try {
@@ -46,13 +55,16 @@ const QuizPage = () => {
         setResult(isCorrect ? 'Correct!' : 'Incorrect.');
 
         if (isCorrect) {
-            const newScore = score + 10;
-            setScore(newScore); // Increment score by 10
-            localStorage.setItem('quizScore', newScore); // Save score to localStorage
+            const newCoins = coins + 10;  // Renamed from newScore to newCoins
+            setCoins(newCoins); // Increment coins by 10
+            localStorage.setItem(userCoinsKey, newCoins); // Save coins to localStorage with user-specific key
         }
 
         setSelectedAnswer('');
         setCompleted(true);
+        if (quizCompletionKey) {
+            localStorage.setItem(quizCompletionKey, 'true'); // Mark the quiz as completed for the user
+        }
     };
 
     if (!quiz) return <div>Loading...</div>;
@@ -61,7 +73,7 @@ const QuizPage = () => {
         <div className="quiz-container">
             <div className="quiz-header">
                 <h2>Quiz</h2>
-                <div className="score">Score: {score}</div>
+                <div className="score">Coins: {coins}</div>
             </div>
             {!completed ? (
                 <>
