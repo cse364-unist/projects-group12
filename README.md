@@ -1,77 +1,101 @@
-## USER 
+\# Movie Application - Rest2Night
 
-### Register new User
-```bash
-$ curl -v -X POST localhost:8080/users/register \
--H 'Content-type:application/json' \
--d '{"userId": 0, "username": "kimki", "password": "password", "age": 4, "occupation": "scientist", "gender": "M"}'
-```
+Welcome to our Movie Application! This application is designed to
+provide you with an enjoyable and personalized movie experience. Explore
+a wide range of movies, add your favorites to your wishlist, participate
+in daily quizzes, and unlock movies with earned coins.
 
-### Login User(=kimki)
-```bash
-$ curl -v -X POST localhost:8080/users/register \
--H 'Content-type:application/json' \
--d '{"username": "kimki", "password": "password"}'
-```
+\## Table of Contents
 
-### Add movie to Wish List of a User(=kimki)
-```bash
-$ curl -v -X POST localhost:8080/users/kimki/wishList/add?movieId=5
-```
+1\. \[Features\](#features) 2. \[Installation\](#installation) 3.
+\[Usage\](#usage)  - \[Main Page\](#main-page)  - \[Movie
+Page\](#movie-page)  - \[Wishlist\](#wishlist)  - \[Quizzes\](#quizzes)
+4. \[Recommendations\](#recommendations) 5. \[User
+Authentication\](#user-authentication) 6. \[Coin System\](#coin-system)
+7. \[Filters\](#filters)
 
-### Get a Wish List of a User(=kimki)
-```bash
-$ curl -v  http://localhost:8080/kimki/wishList
-```
+\## Features
 
-### Add points of solved Quiz to User(=kimki)
-```bash
-$ curl -v -X POST localhost:8080/users/kimki/addPoints
-```
+\- \*\*Browse Movies\*\*: Scroll through a list of movies on the main
+page. - \*\*View Movie Details\*\*: Click on \"View Details\" to see
+detailed information about any movie. - \*\*Add to Wishlist\*\*: Add
+movies to your wishlist for easy access later. - \*\*Rate and
+Comment\*\*: Rate and leave comments on movie pages. - \*\*Daily
+Quizzes\*\*: Answer daily quizzes to earn coins. - \*\*Unlock
+Movies\*\*: Use earned coins to unlock and view certain movies. -
+\*\*Filters\*\*: Find movies by genres, occupation, age, gender, and
+occasion-based recommendations.
 
-## Movie
+\## Installation
 
-### Get Movie by its Id(=5)
-```bash
-$ curl -v  http://localhost:8080/movies/5
-```
+1\. Clone the repository: \`\`\`bash git clone
+https://github.com/cse364-unist/projects-group12.git \`\`\` 2. Navigate
+to the project directory: \`\`\`bash cd Rest2nightApplication \`\`\` 3.
+Install dependencies: \`\`\`bash npm install \`\`\` 4. Start the
+application: \`\`\`bash npm start \`\`\`
 
-### Add comment to Movie with Id(=5)
+\## Usage
 
-```bash
-$ curl -v -X POST localhost:8080/movies/5/addComment \
--H 'Content-type:application/json' \
--d '{"username": "kimki", "body": "Awesome Movie!", "rate": 4}'
-```
+\### Main Page
 
-## Quiz
+The main page showcases a list of all available movies. You can scroll
+through and explore different movies. Each movie card provides an option
+to view details or add the movie to your wishlist.
 
-### Get a random Quiz
+\- \*\*View Details\*\*: Click the \"View Details\" button on a movie
+card to navigate to the movie\'s detail page. - \*\*Add to Wishlist\*\*:
+Click the \"Add to Wishlist\" button to add the movie to your wishlist.
+A notification will confirm the successful addition.
 
-```bash
-$ curl -v  http://localhost:8080/quiz
-```
+\### Movie Page
 
-## Recommendation
+On the movie page, you can: - \*\*Rate the Movie\*\*: Give the movie a
+star rating. - \*\*Leave a Comment\*\*: Write and submit comments about
+the movie. - \*\*View Comments\*\*: Read comments left by other users.
 
-### Type 1
-1. Run the following command in your terminal:
-```bash
-$ curl -X GET http://localhost:8080/recommendation/type1 \
--H 'Content-type:application/json' -d '{"gender" : "[gender]", "age" :"[age]", \ 
-"occupation" : "[occupation]", "genre" : "[genre_1|genre_2]"}'
-```
-2. Replace the placeholders [gender], [age], [occupation], 
-and [genre_1|genre_2] with the respective user data and preferred genres.
+\### Wishlist
 
-Example
-```bash
-$ curl -X GET http://localhost:8080/recommendation/type1 \ 
--H 'Content-type:application/json' -d '{"gender" : "F", "age" :"25", \ 
-"occupation" : "scientist", "genre" : "Action|War"}'
-```
+Your wishlist contains all the movies you\'ve added. Here, you can: -
+\*\*Watch\*\*: Go to the movie\'s page - \*\*Delete\*\*: Remove movies
+from your wishlist by clicking the \"Delete\" button.
 
-### Type 2: Get recommended movies based on an occasion(=Family Night)
-```bash
-$ curl -v  http://localhost:8080/recommendation/type2/familyNight
-```
+\### Quizzes
+
+Participate in daily quizzes to earn coins. Each correct answer earns
+you 10 coins, which can be used to unlock movies.
+
+\## Recommendations
+
+Above the movie cards on the main page, you\'ll find movie
+recommendations based on your occasion (e.g., family night, date night,
+etc.). These recommendations help you find the perfect movie for any
+event.
+
+\## User Authentication
+
+To add movies to your wishlist or participate in quizzes, you need to be
+logged in. If you don\'t have an account, you can register and then log
+in.
+
+\- \*\*Login\*\*: Access your account by clicking the login button. -
+\*\*Register\*\*: Create a new account if you don't have one.
+
+\## Coin System
+
+\- \*\*Earn Coins\*\*: Earn 10 coins by answering daily quizzes. -
+\*\*Spend Coins\*\*: Use coins to unlock certain movies on the main
+page.
+
+Your coin balance is displayed in the top right corner of the header.
+
+\## Filters
+
+Use various filters on the main page to find movies that suit your
+preferences: - \*\*Genres\*\*: Filter movies by genres like Action,
+Drama, Comedy, etc. - \*\*Occupation\*\*: Find movies based on
+characters\' occupations. - \*\*Age\*\*: Filter movies suitable for
+different age groups. - \*\*Gender\*\*: Choose movies based on
+gender-specific themes. - \*\*Occasions\*\*: Get movie recommendations
+for specific occasions like family night or date night.
+
+Enjoy your movie experience with our application!
