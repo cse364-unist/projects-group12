@@ -124,7 +124,7 @@ button:hover {
 
 .header-buttons .quiz-button,
 .header-buttons .logout-button, 
-.nav-button {
+.nav-button, .unlocked-movies {
   margin-left: 10px;
   background-color: #222222;
   color: #f4f4f4;
@@ -141,7 +141,7 @@ button:hover {
   background-color: #D32F2F;
 }
 
-.header-buttons .quiz-button:hover, 
+.header-buttons .quiz-button:hover, .unlocked-movies:hover,  
 .nav-button:hover {
   background-color: #333;
 }
