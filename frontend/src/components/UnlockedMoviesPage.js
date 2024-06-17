@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from '../api/axiosConfig';
 import '../index.css';
+import './UnlockedMovies.css';
 
 const UnlockedMovies = () => {
     const [unlocked, setUnlocked] = useState([]);
