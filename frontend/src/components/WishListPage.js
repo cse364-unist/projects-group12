@@ -6,6 +6,7 @@ import axios from '../api/axiosConfig';
 const Wishlist = ({onBuy }) => {
   const [wishlist, setWishlist] = useState([]);
   const navigate = useNavigate();
+  const [unlockedList, setUnlockedList] = useState([]);
 
   useEffect(() => {
     const fetchWishlist = async () => {
@@ -17,6 +18,16 @@ const Wishlist = ({onBuy }) => {
         } catch (error) {
           console.log("SOME ERROR WHILE FETCHING WISH LIST", error);
         }
+
+        axios.get(`/users/${username}/unlockedMovies`)
+          .then(response => {
+            setUnlockedList(response.data);
+            console.log('SUCCESS fetching unlocked movies')
+          })
+          .catch(error => {
+            console.log("ERROR while fetching unlocked movies:", error);
+          })
+
       } else {
         navigate('/auth');
       }
@@ -48,9 +59,8 @@ const Wishlist = ({onBuy }) => {
         await axios.post(`/users/${username}/unlockedMovies/add?movieId=${movieId}`);
         console.log("SUCCESS unlocking movie");
         localStorage.setItem('score', curScore - 10);
-        setWishlist(prevWishlist => prevWishlist.map(movie => 
-          movie.movieId === movieId ? { ...movie, unlocked: true } : movie
-        ));
+        setUnlockedList([... unlockedList, movieId]);
+
         onBuy();
       } catch (error) {
         console.log("SOMETHING WENT WRONG WHILE unlocking movie", error);
@@ -72,7 +82,7 @@ const Wishlist = ({onBuy }) => {
           <div key={movie.movieId} className="wishlist-card">
             <img src={movie.posterLink} alt={movie.title} className="wishlist-image" />
             <h2>{movie.title}</h2>
-            {!movie.unlocked ? (
+            {!unlockedList.includes(movie.movieId) ? (
               <button onClick={() => handleBuy(movie.movieId)}>10c BUY</button>
             ) : (
               <button onClick={() => handleClick(movie.movieId)}>View Details</button>
