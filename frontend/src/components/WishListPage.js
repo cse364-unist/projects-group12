@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './Wishlist.css';
 import axios from '../api/axiosConfig';
 
-const Wishlist = ({ movie, unlocked, onBuy }) => {
+const Wishlist = ({onBuy }) => {
   const [wishlist, setWishlist] = useState([]);
   const navigate = useNavigate();
 
