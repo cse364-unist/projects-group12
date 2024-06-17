@@ -46,6 +46,7 @@ To get started with Rest2Night, follow these steps:
 The main page is your gateway to all available movies:
 - **View Details**: Discover more about a movie by clicking "View Details".
 - **Add to Wishlist**: Save to your wishlist for later viewing.
+![Main Page](mainpage.png)
 
 ### 🎥 Exploring Movie Pages
 
@@ -58,6 +59,7 @@ Each movie page offers rich information and community features:
 Your wishlist keeps track of your must-watch movies:
 - **Access and Watch**: Directly access movies from your wishlist.
 - **Remove Titles**: Keep your list tidy by removing watched or unwanted titles.
+![Main Page](wishlist.png)
 
 ### ❓ Participating in Quizzes
 
@@ -67,6 +69,7 @@ Engage with daily quizzes to earn coins:
 ### 💡 Movie Recommendations
 
 Discover movies that perfectly match your preferences and current mood with our sophisticated recommendation engine. Rest2Night offers personalized movie suggestions based  on a variety of demographic and occasion-based factors:
+![Main Page](Recommendation.png)
 
 - **Demographic-Based Recommendations**:
   - **Gender**: Find films that resonate more with specific genders, whether it's action-packed blockbusters or romantic dramas.
@@ -84,6 +87,7 @@ Our recommendations are dynamically tailored to ensure you always have access to
 
 To participate fully, including adding to your wishlist and participating in quizzes, you need to be logged in:
 - **Login/Register**: Easily access or create your account using the login/register options.
+![Main Page](login.png)
 
 ### 💰 Understanding the Coin System
 
