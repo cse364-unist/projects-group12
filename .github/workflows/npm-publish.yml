@@ -24,7 +24,7 @@ jobs:
           node-version: '20'
 
       - name: Change to frontend directory
-        run: cd frontend && ls # Adding 'ls' to list files for debugging
+        run: cd frontend
 
       - name: Install dependencies
         run: |
@@ -51,7 +51,7 @@ jobs:
           registry-url: https://registry.npmjs.org/
 
       - name: Change to frontend directory
-        run: cd frontend && ls # Adding 'ls' to list files for debugging
+        run: cd frontend
 
       - name: Install dependencies
         run: |
