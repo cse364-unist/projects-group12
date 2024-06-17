@@ -124,7 +124,7 @@ const QuizPage = ({ curScore, onSolve }) => {
                             ) : (
                                 <div>
                                     <h3>Oops!</h3>
-                                    <p>That's not quite right. Try again tomorrow!</p>
+                                    <p>Oops! Not quite. Let's pretend this never happened and try again tomorrow!</p>
                                 </div>
                             )}
                     <p>Thanks for participating in today's quiz. Come back tomorrow for another question!</p>
