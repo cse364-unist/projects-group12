@@ -48,6 +48,7 @@ public class UserService {
         if(unlockedMovies.contains(movieId)){
             return;
         }
+        unlockedMovies.add(movieId);
         takePointsFromUser(user);
         user.setUnlockedMovies(unlockedMovies);
         userRepository.save(user);
