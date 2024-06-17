@@ -65,6 +65,7 @@ Your wishlist keeps track of your must-watch movies:
 
 Engage with daily quizzes to earn coins:
 - **Answer Questions**: Each correct answer rewards you with coins.
+![Main Page](quizpage.png)
 
 ### 💡 Movie Recommendations
 
