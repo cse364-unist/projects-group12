@@ -47,3 +47,7 @@
     background-color: #454545;
   }
 
+  .wishlist-card button{
+    width: fit-content;
+    margin:20px;
+  }
