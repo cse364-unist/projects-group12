@@ -1,22 +1,30 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from '../api/axiosConfig';
-import './QuizPage.css'; // Import your custom CSS for QuizPage styling
+import './QuizPage.css';
 
-const QuizPage = () => {
-    const username = localStorage.getItem('username'); // Assuming you store the username in local storage
-    const userCoinsKey = username ? `${username}_quizScore` : 'quizScore'; // Renamed from userScoreKey to userCoinsKey for clarity
+const QuizPage = ({curScore, onSolve}) => {
+
+    const navigate = useNavigate();
+    const [username, setUsername] = useState(localStorage.getItem('username'));
+    
+    useEffect(() => {
+        const userName = localStorage.getItem('username');
+        if(userName){
+            setUsername(userName);
+        }else {
+            navigate('/auth');
+        }
+    }, [])
+
+    const quizCompletionKey = `${username}_completedQuiz`;
 
     const [quiz, setQuiz] = useState(null);
     const [selectedAnswer, setSelectedAnswer] = useState('');
     const [result, setResult] = useState(null);
-    const [coins, setCoins] = useState(() => {  // Renamed from score to coins
-        const savedCoins = localStorage.getItem(userCoinsKey);
-        return savedCoins ? parseInt(savedCoins, 10) : 0; // Retrieve coins specific to the user
-    });
-    const quizCompletionKey = username ? `${username}_completedQuiz` : null;
+    const [coins, setCoins] = useState(curScore);
 
     const [completed, setCompleted] = useState(() => {
-        // Check if the user has already completed the quiz
         return localStorage.getItem(quizCompletionKey) === 'true';
     });
 
@@ -55,9 +63,17 @@ const QuizPage = () => {
         setResult(isCorrect ? 'Correct!' : 'Incorrect.');
 
         if (isCorrect) {
-            const newCoins = coins + 10;  // Renamed from newScore to newCoins
-            setCoins(newCoins); // Increment coins by 10
-            localStorage.setItem(userCoinsKey, newCoins); // Save coins to localStorage with user-specific key
+            const newScore = coins + 10;
+            setCoins(newScore);
+            localStorage.setItem('score', newScore);
+            axios.post(`/users/${username}/addPoints`)
+                .then(response => {
+                    console.log("SUCCESS: ", response.data);
+                })
+                .catch(error => {
+                    console.log("ERROR while adding points: ", error);
+                })
+            onSolve();
         }
 
         setSelectedAnswer('');
@@ -73,7 +89,7 @@ const QuizPage = () => {
         <div className="quiz-container">
             <div className="quiz-header">
                 <h2>Quiz</h2>
-                <div className="score">Coins: {coins}</div>
+                <div className="score">Coins: {curScore}</div>
             </div>
             {!completed ? (
                 <>
