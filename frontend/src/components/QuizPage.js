@@ -3,36 +3,37 @@ import { useNavigate } from 'react-router-dom';
 import axios from '../api/axiosConfig';
 import './QuizPage.css';
 
-const QuizPage = ({curScore, onSolve}) => {
-
+const QuizPage = ({ curScore, onSolve }) => {
     const navigate = useNavigate();
     const [username, setUsername] = useState(localStorage.getItem('username'));
-    
+
     useEffect(() => {
         const userName = localStorage.getItem('username');
-        if(userName){
+        if (userName) {
             setUsername(userName);
-        }else {
+        } else {
             navigate('/auth');
         }
-    }, [])
+    }, []);
 
     const quizCompletionKey = `${username}_completedQuiz`;
 
     const [quiz, setQuiz] = useState(null);
     const [selectedAnswer, setSelectedAnswer] = useState('');
-    const [result, setResult] = useState(null);
+    const [result, setResult] = useState(localStorage.getItem(quizCompletionKey));
     const [coins, setCoins] = useState(curScore);
 
     const [completed, setCompleted] = useState(() => {
-        return localStorage.getItem(quizCompletionKey) === 'true';
+        return localStorage.getItem(quizCompletionKey) ? true : false;
     });
+
+
 
     useEffect(() => {
         const lastQuizDate = localStorage.getItem('lastQuizDate');
         const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
 
-        if (!lastQuizDate || lastQuizDate !== today || localStorage.getItem(quizCompletionKey) !== 'true') {
+        if (!lastQuizDate || lastQuizDate !== today || !localStorage.getItem(quizCompletionKey)) {
             fetchQuiz();
             localStorage.setItem('lastQuizDate', today); // Update the date after fetching the quiz
             setCompleted(false); // Reset completed status if it's a new day
@@ -60,7 +61,7 @@ const QuizPage = ({curScore, onSolve}) => {
         event.preventDefault();
 
         const isCorrect = selectedAnswer === quiz.answer;
-        setResult(isCorrect ? 'Correct!' : 'Incorrect.');
+        setResult(isCorrect ? 'true' : 'false');
 
         if (isCorrect) {
             const newScore = coins + 10;
@@ -79,7 +80,7 @@ const QuizPage = ({curScore, onSolve}) => {
         setSelectedAnswer('');
         setCompleted(true);
         if (quizCompletionKey) {
-            localStorage.setItem(quizCompletionKey, 'true'); // Mark the quiz as completed for the user
+            localStorage.setItem(quizCompletionKey, `${isCorrect ? true : false}`); // Mark the quiz as completed for the user
         }
     };
 
@@ -111,12 +112,22 @@ const QuizPage = ({curScore, onSolve}) => {
                         ))}
                         <button type="submit" className="submit-button">Submit</button>
                     </form>
-                    {result && <div className={`result ${result === 'Correct!' ? 'correct-answer' : 'incorrect-answer'}`}>{result}</div>}
                 </>
             ) : (
                 <div className="come-back-tomorrow">
-                    <h3>Great job!</h3>
-                    <p>Thanks for participating in today's quiz. Come back tomorrow for another question! 🎉</p>
+                    <h3>See you tomorrow!</h3>
+                    {result === 'true' ? (
+                                <div>
+                                    <h3>Congratulations!</h3>
+                                    <p>You solved it correctly! 🎉</p>
+                                </div>
+                            ) : (
+                                <div>
+                                    <h3>Oops!</h3>
+                                    <p>That's not quite right. Try again tomorrow!</p>
+                                </div>
+                            )}
+                    <p>Thanks for participating in today's quiz. Come back tomorrow for another question!</p>
                     <p>Meanwhile, why not sharpen your wits with some fun facts or puzzles?</p>
                 </div>
             )}

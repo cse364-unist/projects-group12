@@ -3,7 +3,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import '../index.css';
 
 const Header = ({ isLoggedIn, onLogout, curScore, username }) => {
+
   const navigate = useNavigate();
+
+  const handleLogout = () => {
+    onLogout();
+    navigate('/main');
+  }
 
   return (
     <header className="header">
@@ -14,7 +20,7 @@ const Header = ({ isLoggedIn, onLogout, curScore, username }) => {
           {isLoggedIn && (
             <li className="header-buttons">
               <Link to="/quiz" className="quiz-button">Take Quiz</Link>
-              <button className="logout-button" onClick={onLogout}>Logout</button>
+              <button className="logout-button" onClick={handleLogout}>Logout</button>
               <button className='nav-button'>{username} {curScore} c</button>
             </li>
           )}
