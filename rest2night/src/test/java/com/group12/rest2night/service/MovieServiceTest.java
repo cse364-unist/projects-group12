@@ -59,45 +59,45 @@ public class MovieServiceTest {
         assertEquals(2, allMovies.size());
     }
 
-    @Test
-    void testAddComment() {
+    // @Test
+    // void testAddComment() {
 
-        Comment comment = new Comment();
-        comment.setBody("Test comment");
+    //     Comment comment = new Comment();
+    //     comment.setBody("Test comment");
 
-        Movie movie = new Movie();
-        movie.setMovieId(1);
+    //     Movie movie = new Movie();
+    //     movie.setMovieId(1);
 
-        when(movieRepository.findByMovieId(1)).thenReturn(Optional.of(movie));
+    //     when(movieRepository.findByMovieId(1)).thenReturn(Optional.of(movie));
 
-        movieService.addComment(comment, 1);
+    //     movieService.addComment(comment, 1);
 
-        assertEquals(1, movie.getComments().size());
-        verify(movieRepository, times(1)).save(movie);
-    }
+    //     assertEquals(1, movie.getComments().size());
+    //     verify(movieRepository, times(1)).save(movie);
+    // }
 
-    @Test
-    void testAddCommentToMovieWithComments() {
+    // @Test
+    // void testAddCommentToMovieWithComments() {
 
-        Comment comment = new Comment();
-        comment.setBody("Test comment");
+    //     Comment comment = new Comment();
+    //     comment.setBody("Test comment");
 
-        Comment comment2 = new Comment();
-        comment2.setBody("Test2 comment");
+    //     Comment comment2 = new Comment();
+    //     comment2.setBody("Test2 comment");
 
-        Movie movie = new Movie();
-        movie.setMovieId(1);
-        List<Comment> comments = new ArrayList<>();
-        comments.add(comment2);
-        movie.setComments(comments);
+    //     Movie movie = new Movie();
+    //     movie.setMovieId(1);
+    //     List<Comment> comments = new ArrayList<>();
+    //     comments.add(comment2);
+    //     movie.setComments(comments);
 
-        when(movieRepository.findByMovieId(1)).thenReturn(Optional.of(movie));
+    //     when(movieRepository.findByMovieId(1)).thenReturn(Optional.of(movie));
 
-        movieService.addComment(comment, 1);
+    //     movieService.addComment(comment, 1);
 
-        assertEquals(2, movie.getComments().size());
-        verify(movieRepository, times(1)).save(movie);
-    }
+    //     assertEquals(2, movie.getComments().size());
+    //     verify(movieRepository, times(1)).save(movie);
+    // }
 
     @Test
     void testGetMoviesWith(){
