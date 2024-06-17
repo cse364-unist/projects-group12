@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import './mainpage.css';
 import "./secondHeader.css";
 
@@ -308,7 +308,7 @@ const SecondHeader = ({recommend1, recommend2, onRandom}) => {
                 <input
                     type="checkbox"
                     value={option}
-                    checked={occasion == option}
+                    checked={occasion === option}
                     onChange={() => handleOccasionChange(option)}
                 />
                 {option}

@@ -44,6 +44,17 @@ public class UserController {
         return ResponseEntity.ok(wishlist);
     }
 
+    @GetMapping("/{username}/unlockedMovies")
+    public ResponseEntity<?> getUnlockedMoviesByUserId(@PathVariable String username) {
+        return ResponseEntity.ok(userService.getUnlockedMovies(username));
+    }
+
+    @PostMapping("/{username}/unlockedMovies/add")
+    public ResponseEntity<String> addToUnlockedlist(@PathVariable String username, @RequestParam int movieId) {
+        userService.addMovieToUnlockedlist(username, movieId);
+        return ResponseEntity.ok("Movie added to wishlist successfully");
+    }
+
     @PostMapping("/register")
     public ResponseEntity<String> addUser(@RequestBody User user){
         String username = user.getUsername();
@@ -72,5 +83,10 @@ public class UserController {
     public ResponseEntity<?> addPoints(@PathVariable String username){
         userService.addPointsToUser(username);
         return ResponseEntity.ok("Added Successfuly");
+    }
+
+    @GetMapping("/{username}/getPoints")
+    public ResponseEntity<?> getPoints(@PathVariable String username){
+        return ResponseEntity.ok(userService.getPointsOfUser(username));
     }
 }

@@ -39,6 +39,20 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public void addMovieToUnlockedlist(String username, int movieId) {
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));
+        List<Integer> unlockedMovies = user.getUnlockedMovies();
+        if (unlockedMovies == null) {
+            unlockedMovies = new ArrayList<>();
+        }
+        if(unlockedMovies.contains(movieId)){
+            return;
+        }
+        takePointsFromUser(user);
+        user.setUnlockedMovies(unlockedMovies);
+        userRepository.save(user);
+    }
+
     public void deleteMovieFromWishlist(String username, int movieId) {
         User user = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));
         List<Integer> wishList = user.getWishList();
@@ -59,6 +73,11 @@ public class UserService {
                     movies.add(movie);
                 });
         return movies;
+    }
+
+    public List<Integer> getUnlockedMovies(String username) {
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));
+        return user.getUnlockedMovies();
     }
 
     public User register(User user){
@@ -99,6 +118,16 @@ public class UserService {
         User user = userRepository.findByUsername(username).orElseThrow();
         long points = user.getPoints();
         user.setPoints(points + 10);
-        userRepository.save(user); // Save the updated user
+        userRepository.save(user); 
+    }
+
+    public void takePointsFromUser(User user){
+        long points = user.getPoints();
+        user.setPoints(points - 10);
+    }
+
+    public long getPointsOfUser(String username){
+        User user = userRepository.findByUsername(username).orElseThrow();
+        return user.getPoints();
     }
 }

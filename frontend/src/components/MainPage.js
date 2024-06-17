@@ -6,13 +6,15 @@ import './mainpage.css';
 import SecondHeader from './SecondHeader';
 import LoadingIcon from './LoadingIcon';
 
-const MainPage = () => {
+const MainPage = ({updateScore}) => {
   const navigate = useNavigate();
 
   const [movies, setMovies] = useState([]);
   const [curRec, setCurRec] = useState({});
   const [rec, setRec] = useState(false);
   const [loading, setLoading] = useState(false); 
+  const [unlockedMovies, setUnlockedMovies] = useState([]);
+  // const [score, setScore] = useState(0);
 
   useEffect(() => {
     setLoading(true);
@@ -26,6 +28,20 @@ const MainPage = () => {
         setLoading(false);
       });
   }, []);
+
+    useEffect(() => {
+      const username = localStorage.getItem('username');
+      
+      if(username){
+        axios.get(`/users/${username}/unlockedMovies`)
+          .then(respponse => {
+            setUnlockedMovies(respponse.data ?? []);
+          })
+          .catch(error => {
+            console.log('some error while taking UNLOCKED movies', error)
+          });
+      }
+    }, []);
 
   const recommendTypeOne = async (data) => {
     setLoading(true);
@@ -74,6 +90,10 @@ const MainPage = () => {
     }
   }
 
+  const handleBuy = () => {
+    updateScore();
+  }
+
   return (
     <div>
       <SecondHeader recommend1={recommendTypeOne} recommend2={recommendTypeTwo} onRandom={getRandom}/>
@@ -85,7 +105,7 @@ const MainPage = () => {
         ) : (
           <div className="movies-grid">
             {movies.map(movie => (
-              <MovieCard key={movie.movieId} movie={movie} />
+              <MovieCard key={movie.movieId} movie={movie} unlocked={unlockedMovies.includes(movie.movieId)} onBuy={handleBuy}/>
             ))}
           </div>
         )}

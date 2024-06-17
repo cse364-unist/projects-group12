@@ -3,7 +3,6 @@ import axios from "../api/axiosConfig"
 
 
 const RegisterForm = ({ onRegister }) => {
-//   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
 
@@ -17,7 +16,6 @@ const RegisterForm = ({ onRegister }) => {
         await axios.post('/users/register', { username, password });
         console.log('Registration successful');
         onRegister(username);
-        localStorage.setItem('username', username);
       } catch (error) {
         console.error('Registration failed', error);
       }
@@ -26,15 +24,6 @@ const RegisterForm = ({ onRegister }) => {
   return (
     <form onSubmit={handleSubmit}>
       <h2>Register</h2>
-      {/* <div>
-        <label>Email:</label>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-      </div> */}
       
       <div>
         <label>Username:</label>
