@@ -14,6 +14,7 @@ const Header = ({ isLoggedIn, onLogout, curScore, username }) => {
           {isLoggedIn && (
             <li className="header-buttons">
               <Link to="/quiz" className="quiz-button">Take Quiz</Link>
+              <button className="unlocked-movies" onClick={() => navigate('/unlockedMovies')}>Unlocked Movies</button>
               <button className="logout-button" onClick={onLogout}>Logout</button>
               <button className='nav-button'>{username} {curScore} c</button>
             </li>

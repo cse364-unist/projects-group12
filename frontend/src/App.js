@@ -7,9 +7,10 @@ import Header from './components/Header';
 import QuizPage from './components/QuizPage'; // Import the new QuizPage component
 import MoviePage from './components/MoviePage';
 import WishlistPage from './components/WishListPage';
+import UnlockedMoviesPage from './components/UnlockedMoviesPage';
 import axios from "./api/axiosConfig"
-
 import './index.css';
+
 
 const App = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -86,6 +87,7 @@ const App = () => {
         />
         <Route path="/movie/:movieId" element={<MoviePage />} />
          <Route path="/wishlist" element={<WishlistPage />} />
+         <Route path="/unlockedMovies" element={<UnlockedMoviesPage/>}/>
 
       </Routes>
     </Router>
