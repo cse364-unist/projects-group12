@@ -48,6 +48,7 @@ public class UserService {
         if(unlockedMovies.contains(movieId)){
             return;
         }
+        unlockedMovies.add(movieId);
         takePointsFromUser(user);
         user.setUnlockedMovies(unlockedMovies);
         userRepository.save(user);
@@ -78,6 +79,17 @@ public class UserService {
     public List<Integer> getUnlockedMovies(String username) {
         User user = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));
         return user.getUnlockedMovies();
+    }
+
+    public List<Movie> getUnlockedMoviesList(String username) {
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));
+        List<Movie> movies = new ArrayList<>();
+        user.getUnlockedMovies().stream()
+                .forEach(movieId -> {
+                    Movie movie = movieService.findMovie(movieId).orElse(null);
+                    movies.add(movie);
+                });
+        return movies;
     }
 
     public User register(User user){

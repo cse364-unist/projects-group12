@@ -13,19 +13,47 @@ const MoviePage = () => {
   const [hoverRating, setHoverRating] = useState(0);
   const [error, setError] = useState('');
   const [notification, setNotification] = useState('');
+  const [username, setUsername] = useState('');
+  const [curRate, setCurRate] = useState();
 
   const navigate = useNavigate();
 
   useEffect(() => {
+    const username = localStorage.getItem('username');
+      
+    if(username){
+      setUsername(username);
+      axios.get(`/users/${username}/unlockedMovies`)
+        .then(respponse => {
+          const unlocked_movies = respponse.data || [];
+          console.log(unlocked_movies, movieId)
+          if(!unlocked_movies.includes(Number(movieId))) {
+            navigate('/main');
+            alert('NICE TRY! Buy it first');
+          }
+        })
+        .catch(error => {
+          console.log('some error while taking UNLOCKED movies', error)
+        });
+      } else {
+        navigate('/auth')
+      }
+
     axios.get(`/movies/${movieId}`)
       .then(response => {
         setMovie(response.data);
+        console.log('COMMENTS: ', response.data.comments);
         setComments(response.data.comments || []);
+        setCurRate(response.data.rate);
       })
       .catch(error => {
         console.error('There was an error fetching the movie!', error);
       });
   }, [movieId]);
+
+  useEffect(() => {
+    const username = localStorage.getItem('username');
+  }, [])
 
   const handleCommentSubmit = () => {
     if (rating === 0) {
@@ -33,18 +61,33 @@ const MoviePage = () => {
       return;
     }
     const comment = {
-      text: newComment,
-      date: new Date().toISOString().split('T')[0],
-      time: new Date().toLocaleTimeString(),
-      rating: rating,
-      
+      username: username,
+      body: newComment,
+      timestamp: new Date(),
+      rate: rating,
     };
+    setCurRate([(curRate[0]*curRate[1] + rating)/(curRate[1] + 1), curRate[1] + 1]);
+    submitComment(comment);
     setComments([...comments, comment]);
     setNewComment('');
     setRating(0);
     setHoverRating(0);
     setError('');
   };
+
+  const submitComment = async (comment) =>{
+    try{
+      await axios.post(`/movies/${movieId}/addComment`, {
+        username: username,
+        rate: comment.rate,
+        body: comment.body,
+      });
+      console.log("SUCCES ADDING COMMENT")
+
+    } catch(error){
+      console.log("ERROR WHILE ADDING COMMENT", error);
+    }
+  }
 
   const handleAddToWishlist = async () => {
     const username = localStorage.getItem('username');
@@ -73,7 +116,7 @@ const MoviePage = () => {
         <div className="details">
           <h1>{movie.title}</h1>
           <p>Genres: {movie.genres.join(', ')}</p>
-          <p>Rating: ⭐ {movie.rate[0].toFixed(1)}/5</p>
+          <p>Rating: ⭐ {curRate[0].toFixed(1)}/5</p>
           <button className="watch-button">Watch</button>
           <button className="wishlist-button" onClick={handleAddToWishlist}>Add to Wishlist</button>
           {notification && <p className="notification">{notification}</p>}
@@ -105,13 +148,13 @@ const MoviePage = () => {
           ))}
         </div>
         {error && <p className="error-message">{error}</p>}
-        <button onClick={handleCommentSubmit} className="submit-button">Submit</button>
+        <button onClick={handleCommentSubmit} className="submit-button" style={{marginTop: '5px'}}>Submit</button>
         <div className="comments-list">
           {comments.map((comment, index) => (
             <div key={index} className="comment">
-              <p>{comment.time} {comment.date}</p>
-              <p>{comment.text}</p>
-              <p>Rating:  {'⭐'.repeat(comment.rating)}</p>
+              <h4 style={{margin: '0px'}}>{comment.username} {comment.timestamp.toString().split('T')[0]}</h4>
+              <p>{comment.body}</p>
+              <p>Rating:  {'⭐'.repeat(comment.rate)}</p>
             </div>
           ))}
         </div>

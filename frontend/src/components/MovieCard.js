@@ -79,7 +79,7 @@ const MovieCard = ({ movie, unlocked, onBuy}) => {
       <div className='buttonc'>
         <button onClick={handleWL}>+ Add to WL</button>
         {!isLocked ? <button onClick={handleClick}>View Details</button> : 
-                <button onClick={handleBuy}>10c BUY</button>
+                <button onClick={handleBuy}>BUY 10c</button>
                 }
       </div>
     </div>

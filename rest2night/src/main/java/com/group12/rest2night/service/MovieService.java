@@ -42,6 +42,10 @@ public class MovieService {
         if(comments == null){
             comments = new ArrayList<>();
         } 
+        ArrayList<Double> rate = movie.getRate();
+        rate.set(0, (rate.get(0)*rate.get(1) + comment.getRate())/(rate.get(1)+1));
+        rate.set(1, rate.get(1) + 1);
+        movie.setRate(rate);
         comments.add(comment);
         movie.setComments(comments);
         movieRepository.save(movie);

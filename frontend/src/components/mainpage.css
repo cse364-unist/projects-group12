@@ -78,16 +78,21 @@ body {
 
 .comments-section textarea {
   width: 300px;
-  height: 200px;
+  height: 100px;
   padding: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   border-radius: 5px;
   border: 1px solid #ccc;
   resize: none;
 }
 
 .rating {
+  margin-left: 5px;
   margin-bottom: 10px;
+}
+
+.rating p{
+  margin: 0px;
 }
 
 .rating span {
@@ -111,7 +116,10 @@ body {
 }
 
 .comments-list {
+  height: 300px;
+  overflow-y: scroll;
   margin-top: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);;
 }
 
 

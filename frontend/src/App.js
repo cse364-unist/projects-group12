@@ -63,12 +63,16 @@ const App = () => {
     setScore(score - 10);
   }
 
+  const solvedQuiz = () => {
+    setScore(score + 10);
+  }
+
   return (
     <Router>
       <Header isLoggedIn={isLoggedIn} onLogout={handleLogout} curScore={score} username={username}/>
       <Routes>
         <Route path="/main" element={<MainPage updateScore={onBuy}/>} />
-        <Route path="/quiz" element={<QuizPage />} /> {/* Add route for QuizPage */}
+        <Route path="/quiz" element={<QuizPage curScore={score} onSolve={solvedQuiz}/>} /> {/* Add route for QuizPage */}
         <Route 
           path="/auth" 
           element={isLoggedIn ? <Navigate to="/main" /> : (

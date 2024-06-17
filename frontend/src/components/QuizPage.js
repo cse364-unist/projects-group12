@@ -1,30 +1,39 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from '../api/axiosConfig';
-import './QuizPage.css'; // Import your custom CSS for QuizPage styling
+import './QuizPage.css';
 
-const QuizPage = () => {
-    const username = localStorage.getItem('username'); // Assuming you store the username in local storage
-    const userCoinsKey = username ? `${username}_quizScore` : 'quizScore'; // Renamed from userScoreKey to userCoinsKey for clarity
+const QuizPage = ({ curScore, onSolve }) => {
+    const navigate = useNavigate();
+    const [username, setUsername] = useState(localStorage.getItem('username'));
+
+    useEffect(() => {
+        const userName = localStorage.getItem('username');
+        if (userName) {
+            setUsername(userName);
+        } else {
+            navigate('/auth');
+        }
+    }, []);
+
+    const quizCompletionKey = `${username}_completedQuiz`;
 
     const [quiz, setQuiz] = useState(null);
     const [selectedAnswer, setSelectedAnswer] = useState('');
-    const [result, setResult] = useState(null);
-    const [coins, setCoins] = useState(() => {  // Renamed from score to coins
-        const savedCoins = localStorage.getItem(userCoinsKey);
-        return savedCoins ? parseInt(savedCoins, 10) : 0; // Retrieve coins specific to the user
-    });
-    const quizCompletionKey = username ? `${username}_completedQuiz` : null;
+    const [result, setResult] = useState(localStorage.getItem(quizCompletionKey));
+    const [coins, setCoins] = useState(curScore);
 
     const [completed, setCompleted] = useState(() => {
-        // Check if the user has already completed the quiz
-        return localStorage.getItem(quizCompletionKey) === 'true';
+        return localStorage.getItem(quizCompletionKey) ? true : false;
     });
+
+
 
     useEffect(() => {
         const lastQuizDate = localStorage.getItem('lastQuizDate');
         const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
 
-        if (!lastQuizDate || lastQuizDate !== today || localStorage.getItem(quizCompletionKey) !== 'true') {
+        if (!lastQuizDate || lastQuizDate !== today || !localStorage.getItem(quizCompletionKey)) {
             fetchQuiz();
             localStorage.setItem('lastQuizDate', today); // Update the date after fetching the quiz
             setCompleted(false); // Reset completed status if it's a new day
@@ -52,18 +61,26 @@ const QuizPage = () => {
         event.preventDefault();
 
         const isCorrect = selectedAnswer === quiz.answer;
-        setResult(isCorrect ? 'Correct!' : 'Incorrect.');
+        setResult(isCorrect ? 'true' : 'false');
 
         if (isCorrect) {
-            const newCoins = coins + 10;  // Renamed from newScore to newCoins
-            setCoins(newCoins); // Increment coins by 10
-            localStorage.setItem(userCoinsKey, newCoins); // Save coins to localStorage with user-specific key
+            const newScore = coins + 10;
+            setCoins(newScore);
+            localStorage.setItem('score', newScore);
+            axios.post(`/users/${username}/addPoints`)
+                .then(response => {
+                    console.log("SUCCESS: ", response.data);
+                })
+                .catch(error => {
+                    console.log("ERROR while adding points: ", error);
+                })
+            onSolve();
         }
 
         setSelectedAnswer('');
         setCompleted(true);
         if (quizCompletionKey) {
-            localStorage.setItem(quizCompletionKey, 'true'); // Mark the quiz as completed for the user
+            localStorage.setItem(quizCompletionKey, `${isCorrect ? true : false}`); // Mark the quiz as completed for the user
         }
     };
 
@@ -73,7 +90,7 @@ const QuizPage = () => {
         <div className="quiz-container">
             <div className="quiz-header">
                 <h2>Quiz</h2>
-                <div className="score">Coins: {coins}</div>
+                <div className="score">Coins: {curScore}</div>
             </div>
             {!completed ? (
                 <>
@@ -95,12 +112,22 @@ const QuizPage = () => {
                         ))}
                         <button type="submit" className="submit-button">Submit</button>
                     </form>
-                    {result && <div className={`result ${result === 'Correct!' ? 'correct-answer' : 'incorrect-answer'}`}>{result}</div>}
                 </>
             ) : (
                 <div className="come-back-tomorrow">
-                    <h3>Great job!</h3>
-                    <p>Thanks for participating in today's quiz. Come back tomorrow for another question! 🎉</p>
+                    <h3>See you tomorrow!</h3>
+                    {result === 'true' ? (
+                                <div>
+                                    <h3>Congratulations!</h3>
+                                    <p>You solved it correctly! 🎉</p>
+                                </div>
+                            ) : (
+                                <div>
+                                    <h3>Oops!</h3>
+                                    <p>That's not quite right. Try again tomorrow!</p>
+                                </div>
+                            )}
+                    <p>Thanks for participating in today's quiz. Come back tomorrow for another question!</p>
                     <p>Meanwhile, why not sharpen your wits with some fun facts or puzzles?</p>
                 </div>
             )}

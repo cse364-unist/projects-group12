@@ -3,7 +3,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import '../index.css';
 
 const Header = ({ isLoggedIn, onLogout, curScore, username }) => {
+
   const navigate = useNavigate();
+
+  const handleLogout = () => {
+    onLogout();
+    navigate('/main');
+  }
 
   return (
     <header className="header">
