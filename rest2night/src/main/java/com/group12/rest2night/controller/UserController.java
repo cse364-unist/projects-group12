@@ -49,6 +49,11 @@ public class UserController {
         return ResponseEntity.ok(userService.getUnlockedMovies(username));
     }
 
+    @GetMapping("/{username}/unlockedMoviesList")
+    public ResponseEntity<?> unlockedMovies(@PathVariable String username) {
+        return ResponseEntity.ok(userService.getUnlockedMoviesList(username));
+    }
+
     @PostMapping("/{username}/unlockedMovies/add")
     public ResponseEntity<String> addToUnlockedlist(@PathVariable String username, @RequestParam int movieId) {
         userService.addMovieToUnlockedlist(username, movieId);

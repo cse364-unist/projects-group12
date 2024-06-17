@@ -81,6 +81,17 @@ public class UserService {
         return user.getUnlockedMovies();
     }
 
+    public List<Movie> getUnlockedMoviesList(String username) {
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));
+        List<Movie> movies = new ArrayList<>();
+        user.getUnlockedMovies().stream()
+                .forEach(movieId -> {
+                    Movie movie = movieService.findMovie(movieId).orElse(null);
+                    movies.add(movie);
+                });
+        return movies;
+    }
+
     public User register(User user){
         user.setPoints(100);
         return userRepository.save(user);
