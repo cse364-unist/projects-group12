@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from '../api/axiosConfig';
 import './mainpage.css';
-
+import './UnlockedMovies.css';
 const UnlockedMovies = () => {
     const [unlocked, setUnlocked] = useState([]);
     const navigate = useNavigate();
@@ -51,7 +51,6 @@ const UnlockedMovies = () => {
     return (
         <div className="unlockedmovies-container">
             <h1>Unlocked Movies</h1>
-            {notification && <div className="notification">{notification}</div>}
             <div className="unlockedmovies-grid">
                 {unlocked.map(movie => (
                     <div key={movie.movieId} className="unlockedmovies-card">
@@ -62,6 +61,7 @@ const UnlockedMovies = () => {
                     </div>
                 ))}
             </div>
+            {notification && <div className="notification">{notification}</div>}
         </div>
     );
 };

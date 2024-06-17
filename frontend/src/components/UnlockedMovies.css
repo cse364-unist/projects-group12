@@ -1,0 +1,30 @@
+.unlockedmovies-container {
+    padding: 20px;
+}
+
+.unlockedmovies-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .unlockedmovies-card {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+    width: 300px;
+    height: 650px;
+  }
+
+  .unlockedmovies-image {
+    width: 300px; 
+    height: 450px; 
+    object-fit: cover; 
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  
+
+  .unlockedmovies-container button{
+    width: fit-content;
+  }
