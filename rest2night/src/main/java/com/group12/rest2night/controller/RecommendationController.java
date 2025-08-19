@@ -9,20 +9,17 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/recommendation")
 public class RecommendationController {
 
     @Autowired
     private RecommendationService recommendationService;
 
 
-    @PostMapping("/recommendation/type1")
+    @PostMapping("/type1")
     public ResponseEntity<List<Movie>> getMovies(@RequestBody String input) {
         try{
             JSONObject js = new JSONObject(input.toLowerCase());
@@ -35,7 +32,7 @@ public class RecommendationController {
         }
     }
 
-    @GetMapping("/recommendation/type2/{occasion}")
+    @GetMapping("/type2/{occasion}")
     public ResponseEntity<List<Movie>> getRecommendationsOnOccasion(@PathVariable String occasion) {
         return new ResponseEntity<List<Movie>>(recommendationService.getMoviesOnOccasion(occasion), HttpStatus.OK);
     }

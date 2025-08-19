@@ -1,19 +1,16 @@
+FROM ubuntu:22.04
 
-# Use an official Tomcat base image
-FROM tomcat:9.0.70-jdk11
 
-WORKDIR /usr/local/tomcat
+RUN apt-get update
+RUN apt-get install -y vim openjdk-17-jdk maven curl
 
-# Copy the war file to the webapps directory of Tomcat
-COPY rest2night/target/rest2night.war webapps/
+WORKDIR /app
 
-# Copy the run.sh script to the /root/project directory
-COPY run.sh /root/project/
+ADD ./rest2night /app/backend
+ADD run.sh /app/run.sh
 
-RUN chmod +x /root/project/run.sh
-
-# Expose the port Tomcat is running on
 EXPOSE 8080
 
-# Start Tomcat server
-CMD ["catalina.sh", "run"]
+RUN chmod +x run.sh
+
+ENTRYPOINT ["sh", "/app/run.sh"]

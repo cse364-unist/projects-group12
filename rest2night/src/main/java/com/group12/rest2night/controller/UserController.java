@@ -60,29 +60,29 @@ public class UserController {
         return ResponseEntity.ok("Movie added to wishlist successfully");
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<String> addUser(@RequestBody User user){
-        String username = user.getUsername();
-
-        if (userService.isUserExists(username)) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username already exists");
-        }
-
-        userService.register(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully");
-    }
-    
-    @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
-        String username = loginRequest.getUsername();
-        String password = loginRequest.getPassword();
-
-        if (userService.isValidUser(username, password)) {
-            return ResponseEntity.ok("Login successful");
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
-        }
-    }
+//    @PostMapping("/register")
+//    public ResponseEntity<String> addUser(@RequestBody User user){
+//        String username = user.getUsername();
+//
+//        if (userService.isUserExists(username)) {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username already exists");
+//        }
+//
+//        userService.register(user);
+//        return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully");
+//    }
+//
+//    @PostMapping("/login")
+//    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
+//        String username = loginRequest.getUsername();
+//        String password = loginRequest.getPassword();
+//
+//        if (userService.isValidUser(username, password)) {
+//            return ResponseEntity.ok("Login successful");
+//        } else {
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
+//        }
+//    }
 
     @PostMapping("/{username}/addPoints")
     public ResponseEntity<?> addPoints(@PathVariable String username){

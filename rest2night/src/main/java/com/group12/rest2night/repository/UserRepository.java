@@ -11,5 +11,6 @@ import com.group12.rest2night.entity.User;
 @Repository
 public interface UserRepository extends MongoRepository<User, ObjectId> {
     Optional<User> findByUsername(String username);
+    boolean existsByUsername(String username);
 }
 
