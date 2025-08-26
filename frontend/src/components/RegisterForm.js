@@ -6,20 +6,27 @@ const RegisterForm = ({ onRegister }) => {
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
 
-  const handleSubmit = async (e) => {
-    if (username.trim() === '' || password.trim() === '') {
-        alert('Please fill in all fields before registering.');
-        return;
-      }
-      e.preventDefault();
-      try {
-        await axios.post('/users/register', { username, password });
-        console.log('Registration successful');
-        onRegister(username);
-      } catch (error) {
-        console.error('Registration failed', error);
-      }
-  };
+  
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (username.trim() === '' || password.trim() === '') {
+    alert('Please fill in all fields.');
+    return;
+  }
+  try {
+    const response = await axios.post('/users/login', { username, password });
+    const token = response.data.token;
+    if (token) {
+      localStorage.setItem('jwtToken', token);
+      onRegister(username);
+    }
+  } catch (error) {
+    alert("Register failed");
+    setPassword('');
+    console.error('Register failed', error);
+  }
+};
+
 
   return (
     <form onSubmit={handleSubmit}>

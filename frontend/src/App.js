@@ -44,6 +44,7 @@ const App = () => {
   const handleLogout = () => {
     setIsLoggedIn(false);
     localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('jwtToken');
     localStorage.removeItem('username');
     localStorage.removeItem('score');
   };

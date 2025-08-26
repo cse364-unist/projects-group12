@@ -1,4 +1,4 @@
-// MoviePage.js
+
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from '../api/axiosConfig';
@@ -39,7 +39,7 @@ const MoviePage = () => {
         navigate('/auth')
       }
 
-    axios.get(`/movies/${movieId}`)
+    axios.get(`/movie/${movieId}`)
       .then(response => {
         setMovie(response.data);
         console.log('COMMENTS: ', response.data.comments);
@@ -77,7 +77,7 @@ const MoviePage = () => {
 
   const submitComment = async (comment) =>{
     try{
-      await axios.post(`/movies/${movieId}/addComment`, {
+      await axios.post(`/movie/${movieId}/addComment`, {
         username: username,
         rate: comment.rate,
         body: comment.body,
