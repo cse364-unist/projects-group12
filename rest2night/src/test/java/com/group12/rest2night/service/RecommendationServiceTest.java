@@ -118,7 +118,7 @@ public class RecommendationServiceTest {
         args.put("genre", "action");
 
         // Mocking behavior to return empty set of movies
-        Mockito.when(movieService.getMoviesWith(Mockito.anyList())).thenReturn(new HashSet<>());
+        Mockito.when(movieService.getMoviesWith(Mockito.anyList())).thenReturn(new ArrayList<>());
 
         try {
             recommendationService.getMovies(args);
@@ -136,7 +136,7 @@ public class RecommendationServiceTest {
         args.put("occupation", "scientist");
         args.put("genre", "Action|War");
 
-        HashSet<Integer> someSet = new HashSet<>();
+        List<Integer> someSet = new ArrayList<>();
         someSet.add(5);
         ArrayList<Integer> someArray = new ArrayList<>();
         someArray.add(5);

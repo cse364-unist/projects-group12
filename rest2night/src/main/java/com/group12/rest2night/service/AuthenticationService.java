@@ -1,6 +1,7 @@
 package com.group12.rest2night.service;
 
 import com.group12.rest2night.config.JwtUtil;
+import com.group12.rest2night.entity.AuthResponse;
 import com.group12.rest2night.entity.LoginRequest;
 import com.group12.rest2night.entity.User;
 import com.group12.rest2night.repository.UserRepository;
@@ -25,7 +26,7 @@ public class AuthenticationService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public String login(LoginRequest request){
+    public AuthResponse login(LoginRequest request){
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getUsername(),
@@ -34,10 +35,11 @@ public class AuthenticationService {
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
 
-        return jwtUtil.generateToken(userDetails.getUsername());
+        String token = jwtUtil.generateToken(userDetails.getUsername());
+        return new AuthResponse(token);
     }
 
-    public String register(LoginRequest request){
+    public AuthResponse register(LoginRequest request){
 
         if (userRepository.existsByUsername(request.getUsername())) {
             throw new RuntimeException("Username already taken!");
@@ -45,6 +47,7 @@ public class AuthenticationService {
         User user = new User();
         user.setUsername(request.getUsername());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setPoints(100);
 
         userRepository.save(user);
 
@@ -55,6 +58,7 @@ public class AuthenticationService {
         );
         final UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
 
-        return jwtUtil.generateToken(userDetails.getUsername());
+        String token = jwtUtil.generateToken(userDetails.getUsername());
+        return new AuthResponse(token);
     }
 }

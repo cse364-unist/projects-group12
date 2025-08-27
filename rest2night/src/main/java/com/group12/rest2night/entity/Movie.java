@@ -22,8 +22,6 @@ public class Movie {
     private String title;
     private int year;
     private List<String> genres;
-    //not included//??
-    //private String trailerLine;
     private String posterLink;
     private ArrayList<Double> rate;
     private List<Comment> comments;

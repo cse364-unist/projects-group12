@@ -112,7 +112,7 @@ public class MovieServiceTest {
         List<String> listOfGenres = new ArrayList<>();
         listOfGenres.add("action");
 
-        HashSet<Integer> list = movieService.getMoviesWith(listOfGenres);
+        List<Integer> list = movieService.getMoviesWith(listOfGenres);
         // HashSet<Integer> list2 = movieService.getMoviesWith(listOfGenres);
         assertEquals(1, list.size());
     }

@@ -22,7 +22,7 @@ public class RecommendationController {
     @PostMapping("/type1")
     public ResponseEntity<List<Movie>> getMovies(@RequestBody String input) {
         try{
-            JSONObject js = new JSONObject(input.toLowerCase());
+            JSONObject js = new JSONObject(input);
             HashMap<String,String> args = new HashMap<>();
             for(String key: js.keySet())
                 args.put(key,js.getString(key));

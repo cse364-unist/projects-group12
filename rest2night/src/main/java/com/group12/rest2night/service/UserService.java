@@ -1,6 +1,9 @@
 package com.group12.rest2night.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import com.group12.rest2night.entity.Movie;
@@ -12,6 +15,7 @@ import com.group12.rest2night.repository.UserRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -24,6 +28,9 @@ public class UserService {
 
     @Autowired
     private RatingRepository ratingRepository;
+
+    @Autowired
+    private MongoTemplate mt;
 
     public void addMovieToWishlist(String username, int movieId) {
         User user = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));
@@ -110,16 +117,22 @@ public class UserService {
         return userRepository.findByUsername(username).isPresent();
     }
 
-    public ArrayList<Integer> getUsersWith(String occup, int age, String gender){
-        ArrayList<Integer> list = new ArrayList<>();
-        userRepository.findAll().stream()
-                .forEach(user -> {
-                            if((age == -1 || (user.getAge() == age)) && (gender == "" || (user.getGender() != null && user.getGender().toLowerCase().equals(gender))) && (occup == "" || (user.getOccupation() != null && user.getOccupation().toLowerCase().equals(occup)))){
-                                list.add(user.getUserId());
-                            };
-                        }
-                );
-        return list;
+    public List<Integer> getUsersWith(String occup, Integer age, String gender) {
+        Query query = new Query();
+
+        if (age != null && age != -1) {
+            query.addCriteria(Criteria.where("age").is(age));
+        }
+        if (gender != null && !gender.isEmpty()) {
+            query.addCriteria(Criteria.where("gender").is(gender.toLowerCase()));
+        }
+        if (occup != null && !occup.isEmpty()) {
+            query.addCriteria(Criteria.where("occupation").is(occup.toLowerCase()));
+        }
+
+        return mt.find(query, User.class).stream()
+                .map(User::getUserId)
+                .collect(Collectors.toList());
     }
 
     public List<Rating> getRatingsOfUser(int userId){

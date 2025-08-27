@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
+import com.group12.rest2night.entity.Rating;
+import com.group12.rest2night.repository.RatingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,9 @@ public class MovieService {
     
     @Autowired
     private MovieRepository movieRepository;
+
+    @Autowired
+    private RatingRepository ratingRepository;
 
     public Optional<Movie> findMovie(int id){
         return movieRepository.findByMovieId(id);
@@ -52,13 +57,14 @@ public class MovieService {
         return;
     }
 
-    public HashSet<Integer> getMoviesWith(List<String> genres){
-        HashSet<Integer> list = new HashSet<>();
-        movieRepository.findAll().stream()
-                                .filter(movie -> movie.getGenres().stream().anyMatch(genre -> genres.contains(genre.toLowerCase())))
-                                .map(Movie::getMovieId)
-                                .forEach(list::add);
-        return list;
+    public List<Integer> getMoviesWith(List<String> genres) {
+        return movieRepository.findByGenresIn(genres).stream()
+                .map(Movie::getMovieId)
+                .toList();
+    }
+
+    public List<Rating> getRatingsOfMovie(int movieId){
+        return ratingRepository.findByMovieId(movieId);
     }
 
 }

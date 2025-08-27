@@ -1,6 +1,7 @@
 package com.group12.rest2night.controller;
 
 import com.group12.rest2night.config.JwtUtil;
+import com.group12.rest2night.entity.AuthResponse;
 import com.group12.rest2night.entity.LoginRequest;
 import com.group12.rest2night.service.AuthenticationService;
 import com.group12.rest2night.service.CustomUserDetailsService;
@@ -30,12 +31,12 @@ public class AuthController {
     private AuthenticationService authenticationService;
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+    public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) {
         return ResponseEntity.ok(authenticationService.login(request));
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody LoginRequest request) {
+    public ResponseEntity<AuthResponse> register(@RequestBody LoginRequest request) {
         return ResponseEntity.ok(authenticationService.register(request));
     }
 }

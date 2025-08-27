@@ -17,7 +17,7 @@ import com.group12.rest2night.entity.Movie;
 import com.group12.rest2night.service.MovieService;
 
 @RestController
-@RequestMapping("/movies")
+@RequestMapping("/movie")
 public class MovieController {
     @Autowired
     private MovieService movieService;
@@ -32,16 +32,6 @@ public class MovieController {
     public ResponseEntity<String> addComment(@PathVariable int id, @RequestBody Comment comment){
         movieService.addComment(comment, id);
         return ResponseEntity.ok("Comment was successfully added to Movie");
-    }
-
-    @GetMapping("/")
-    public ResponseEntity<?> allMovies(){
-        return ResponseEntity.ok(movieService.allMovies());
-    }
-
-    @GetMapping("/some")
-    public ResponseEntity<?> someMovies(){
-        return ResponseEntity.ok(movieService.someMovies());
     }
 
 
