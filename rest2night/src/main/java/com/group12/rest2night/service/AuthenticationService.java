@@ -3,6 +3,7 @@ package com.group12.rest2night.service;
 import com.group12.rest2night.config.JwtUtil;
 import com.group12.rest2night.entity.AuthResponse;
 import com.group12.rest2night.entity.LoginRequest;
+import com.group12.rest2night.entity.RegisterRequest;
 import com.group12.rest2night.entity.User;
 import com.group12.rest2night.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,7 @@ public class AuthenticationService {
         return new AuthResponse(token);
     }
 
-    public AuthResponse register(LoginRequest request){
+    public AuthResponse register(RegisterRequest request){
 
         if (userRepository.existsByUsername(request.getUsername())) {
             throw new RuntimeException("Username already taken!");
@@ -47,7 +48,11 @@ public class AuthenticationService {
         User user = new User();
         user.setUsername(request.getUsername());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setGender(request.getGender());
+        user.setAge(request.getAge());
+        user.setOccupation(request.getOccupation());
         user.setPoints(100);
+        user.setUserId((int)userRepository.count() + 1);
 
         userRepository.save(user);
 

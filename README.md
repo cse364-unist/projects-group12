@@ -5,7 +5,7 @@ Welcome to Rest2Night, your ultimate destination for a personalized and enjoyabl
 ## 🌐 Front-End Access
 
 You can access the Rest2Night front-end application through the following link:
-[Rest2Night Front-End](https://usmonali4.github.io/rest2day/main)
+[Rest2Night Front-End](https://usmonali4.github.io/rest2day/)
 
 Visit this link to start exploring our extensive catalog of movies, manage your wishlist, participate in quizzes, and more. This front-end provides an intuitive and engaging interface for all your movie needs.
 
@@ -80,11 +80,12 @@ Engage with daily quizzes to earn coins:
 Discover movies that perfectly match your preferences and current mood with our sophisticated recommendation engine. Rest2Night offers personalized movie suggestions based  on a variety of demographic and occasion-based factors:
 ![Main Page](Recommendation.png)
 
-- **Demographic-Based Recommendations**:
+- **Demographic-Based Recommendations**: We get the movies based on genres as well as the users based on given user data. After grouping them, we use IMDB ranking formula to sort the movies which are rated by people with given user data.
+  - **Genre**: Whether you're in the mood for horror, comedy, adventure, or a documentary, our app has you covered with an extensive genre-based search feature.
   - **Gender**: Find films that resonate more with specific genders, whether it's action-packed blockbusters or romantic dramas.
   - **Age**: Our selections cater to all age groups, ensuring appropriate and appealing content for children, teens, adults, and seniors.
   - **Occupation**: Discover movies that feature protagonists in professions similar to yours, from thrilling tales of entrepreneurs to day-in-the-life stories of medical professionals.
-  - **Genre**: Whether you're in the mood for horror, comedy, adventure, or a documentary, our app has you covered with an extensive genre-based search feature.
+  
 
 - **Occasion-Based Recommendations**:
   - **Family Night**: Choose from a range of family-friendly movies that are perfect for viewing with all age groups, ensuring a fun and engaging experience for everyone.
