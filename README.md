@@ -5,7 +5,7 @@ Welcome to Rest2Night, your ultimate destination for a personalized and enjoyabl
 ## 🌐 Front-End Access
 
 You can access the Rest2Night front-end application through the following link:
-[Rest2Night Front-End](https://usmonali4.github.io/rest2day/)
+[Rest2Night Front-End](https://usmonali4.github.io/rest2night/)
 
 Visit this link to start exploring our extensive catalog of movies, manage your wishlist, participate in quizzes, and more. This front-end provides an intuitive and engaging interface for all your movie needs.
 
